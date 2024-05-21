@@ -7,12 +7,13 @@ body {
   position: relative;
   min-height: 100vh;
 }
+
 /* 제목 스타일 */
 h2 {
   color: #333; /* 회색 계열의 글자색 사용 */
   text-align: center;
   margin-top: 20px; /* 헤더와 제목 사이의 여백 추가 */
-  margin-bottom: 50px;
+  margin-bottom: 20px; /* 여백을 조정하여 게시물과의 간격을 줄입니다. */
 }
 
 /* 게시물 검색창 스타일 */
@@ -57,10 +58,10 @@ h2 {
   width: 200px;
   padding: 30px;
   margin-bottom: 150px;
-  margin-left:20px;
+  margin-left: 20px;
   background-color: #F0FFFF; /* 연한 푸른 계열의 색상으로 사이드바 배경 설정 */
-  border-radius:20px;
-  }
+  border-radius: 20px;
+}
 
 .sidebar ul {
   list-style-type: none;
@@ -68,13 +69,10 @@ h2 {
 }
 
 .sidebar ul li {
-	
   margin-bottom: 40px; /* 마진을 줄여 레이아웃을 조정합니다. */
   font-size: 18px;
   font-weight: bold;
-  background-color: #F0FFFF; /* 사이드바 항목의 백그라운드 색상 설정 */
 }
-
 
 .sidebar ul li a {
   text-decoration: none;
@@ -90,23 +88,20 @@ h2 {
 .container3 {
   position: relative;
   margin-left: 20px;
+  width: 200px;
 }
 
 .popup {
   width: 300px;
   height: 400px;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: #fff;
   border: 3px solid black;
   padding: 20px;
   z-index: 999;
   display: none;
-  border-radius:20px;
+  border-radius: 20px;
 }
-
 
 .popup.active {
   display: block;
@@ -138,9 +133,7 @@ h2 {
   border-radius: 10px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   margin: 20px auto;
-  max-width: 600px;
 }
-
 
 .post .profile,
 .instagram-post .profile {
@@ -163,6 +156,7 @@ h2 {
 .post-content,
 .instagram-post .post-content {
   padding: 10px;
+  margin-bottom: 10px;
 }
 
 .post-content p,

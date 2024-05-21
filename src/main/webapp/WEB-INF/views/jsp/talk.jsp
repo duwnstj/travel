@@ -1,6 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
- <script src="https://t1.kakaocdn.net/kakao_js_sdk/${VERSION}/kakao.min.js"
-    integrity="${INTEGRITY_VALUE}" crossorigin="anonymous"></script>
     
   <link rel="stylesheet" href="../css/talk.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -8,13 +6,13 @@
   <div class="container">
     <!-- 토글 버튼 추가 -->
     <div class="toggle-btn" id="toggleBtn">
-      <i class="fas fa-bars"></i>
     </div>
 
     <div class="side-panel" id="sidePanel">
       <div class="option">
         <button id="friendsBtn">친구 목록</button>
         <button id="groupBtn">단체방 목록</button>
+        <button id="exitTalk">톡나가기</button>
       </div>
       <div class="friends-list panel" id="friends-panel">
         <h2>친구 목록</h2>
@@ -66,25 +64,3 @@
   </div>
 
   <script src="../script/talk.js"></script>
-  
-    <script>
-    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
-    Kakao.init('01b686264cda6f2563e41cb2d408b00e');
-
-    // SDK 초기화 여부를 판단합니다.
-    console.log(Kakao.isInitialized());
-    
-    Kakao.API.request({
-    	  url: '/v1/api/talk/friends/message/send',
-    	  data: {
-    	    receiver_uuids: ['${RECEIVER_UUID}'],
-    	    template_id: ${YOUR_TEMPLATE_ID},
-    	  },
-    	})
-    	  .then(function(response) {
-    	    console.log(response);
-    	  })
-    	  .catch(function(error) {
-    	    console.log(error);
-    	  });
-  </script>

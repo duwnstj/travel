@@ -13,14 +13,6 @@ document.addEventListener("DOMContentLoaded", function() {
   let isDragging = false;
   let startX, startY, popupStartX, popupStartY;
 
-  // 팝업의 초기 위치를 조정합니다.
-  const popupRect = popup.getBoundingClientRect();
-  const initialX = (window.innerWidth - popupRect.width) / 2 - 100; // 오른쪽 여백 100px
-  const initialY = (window.innerHeight - popupRect.height) / 2; // 세로 중앙 정렬
-
-  popup.style.left = initialX + 'px';
-  popup.style.top = initialY + 'px';
-
   function handleDragStart(event) {
     isDragging = true;
     const rect = popup.getBoundingClientRect();
@@ -28,21 +20,36 @@ document.addEventListener("DOMContentLoaded", function() {
     startY = event.clientY;
     popupStartX = rect.left;
     popupStartY = rect.top;
+    event.preventDefault(); // 기본 동작 막기
     event.stopPropagation();
   }
-
-  function handleDragEnd() {
-    isDragging = false;
-  }
+  function handleDragEnd(event) {
+  isDragging = false;
+  document.body.style.cursor = 'default';
+}
 
   function handleMouseMove(event) {
     if (isDragging) {
       const offsetX = event.clientX - startX;
       const offsetY = event.clientY - startY;
-      const newPopupX = popupStartX + offsetX;
-      const newPopupY = popupStartY + offsetY;
+
+      // 팝업의 새 위치 계산
+      let newPopupX = popupStartX + offsetX;
+      let newPopupY = popupStartY + offsetY;
+
+      // 문서 경계를 넘어가지 않도록 보정
+      const maxX = window.innerWidth - popup.offsetWidth;
+      const maxY = window.innerHeight - popup.offsetHeight;
+      newPopupX = Math.max(0, Math.min(newPopupX, maxX));
+      newPopupY = Math.max(0, Math.min(newPopupY, maxY));
+
+      popup.style.transition = 'none'; // 드래그 중에는 transition 제거
       popup.style.left = newPopupX + 'px';
       popup.style.top = newPopupY + 'px';
+
+      // 드래그 중에는 커서 위치를 따라가도록 설정
+      document.body.style.cursor = 'move';
+
       event.stopPropagation();
     }
   }
@@ -55,21 +62,45 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function handleOpenPopupClick(event) {
-    if (!isDragging) {
-      popup.style.display = "block"; // 드래그 중이 아닐 때만 팝업 창을 보이도록 함
-    }
+    popup.style.display = "block";
     event.stopPropagation();
   }
 
   function handleClosePopupClick(event) {
-    popup.style.display = "none"; // 팝업 창을 숨김
+    popup.style.display = "none"; 
     event.stopPropagation();
   }
-
+  
   popup.addEventListener('mousedown', handleDragStart);
   document.addEventListener('mouseup', handleDragEnd);
   document.addEventListener('mousemove', handleMouseMove);
   document.getElementById("search-button").addEventListener("click", handleSearchButtonClick);
   document.getElementById("openPopup").addEventListener("click", handleOpenPopupClick);
   document.getElementById("closePopup").addEventListener("click", handleClosePopupClick);
+
+  // 드래그가 끝나면 다시 transition을 적용하여 부드러운 이동 효과를 제공합니다.
+  document.addEventListener('mouseup', function() {
+    popup.style.transition = 'left 0.3s, top 0.3s';
+    // 드래그가 끝날 때 커서 모양을 기본값으로 변경합니다.
+    document.body.style.cursor = 'default';
+  });
+
+  // 드래그가 끝나면 마우스 커서도 이동을 멈춥니다.
+  document.addEventListener('mouseleave', function() {
+    if (isDragging) {
+      isDragging = false;
+      document.body.style.cursor = 'default';
+    }
+  });
+
+  // 팝업창이 화면을 벗어나지 않도록 설정
+  function handleWindowResize() {
+    const rect = popup.getBoundingClientRect();
+    const maxX = window.innerWidth - rect.width;
+    const maxY = window.innerHeight - rect.height;
+    popup.style.left = Math.max(0, Math.min(rect.left, maxX)) + 'px';
+    popup.style.top = Math.max(0, Math.min(rect.top, maxY)) + 'px';
+  }
+
+  window.addEventListener('resize', handleWindowResize);
 });
