@@ -14,8 +14,8 @@
 
 <div class="sidebar">
   <ul>
-    <li><a href="../jsp/postMake.jsp" class="user-text-color">게시물 만들기</a></li> <!-- 게시물 만들기 버튼에 텍스트 색상 적용 -->
-    <li><a href="../jsp/talk.jsp" class="user-text-color">톡(TALK)</a></li> <!-- 톡(TALK) 버튼에 텍스트 색상 적용 -->
+    <li><a onclick="location='postMake';">게시물 만들기</a></li> <!-- 게시물 만들기 버튼에 텍스트 색상 적용 -->
+    <li><a onclick="location='Talk';">톡(TALK)</a></li> <!-- 톡(TALK) 버튼에 텍스트 색상 적용 -->
         <!-- 필요한 만큼 카테고리를 추가할 수 있습니다. -->
   </ul>
 </div>

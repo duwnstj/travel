@@ -22,9 +22,9 @@ import lombok.ToString;
 		allocationSize = 1
 
 )
-@Table(name = "postmake")
+@Table(name = "community_board")
 @EqualsAndHashCode(of = "mate_no")
-public class PostMakeVO {
+public class Community_boardVO {
 
 	@Id // 기본키
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mate_noseq_gename")

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PostmakeController {
 
 	@Autowired
-	@GetMapping("/postmake")
+	@GetMapping("/postMake")
 	public String postmake() {
 		return "/jsp/postMake";
 	}

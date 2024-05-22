@@ -12,7 +12,7 @@
       <div class="option">
         <button id="friendsBtn">친구 목록</button>
         <button id="groupBtn">단체방 목록</button>
-        <button id="exitTalk">톡나가기</button>
+        <button type="button" id="exitTalk" onclick="location='community_board';">톡나가기</button>
       </div>
       <div class="friends-list panel" id="friends-panel">
         <h2>친구 목록</h2>
