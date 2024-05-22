@@ -1,10 +1,8 @@
 
 
-select *  from community_board;
+select * from community_board;
 
-SELECT * FROM postmake WHERE sequence_name = 'mate_no_seq'
-
-drop table postmake;
+drop table community_board;
 
 alter sequence mate_no_seq
 nocache; --nocache로 수정
@@ -12,4 +10,3 @@ nocache; --nocache로 수정
 alter sequence mate_no_seq
 nocycle; --nocycle로 수정
 
-select * from MEMBER;

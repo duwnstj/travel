@@ -28,7 +28,7 @@ public class Community_boardVO {
 
 	@Id // 기본키
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mate_noseq_gename")
-	private String mate_no;// 기본키
+	private int mate_no;// 기본키
 
 	private String mate_id;
 	private int mate_hit;

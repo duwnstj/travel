@@ -14,6 +14,7 @@ public class CommunityController {
 		return "jsp/main";
 	}
 	
+	
 	//해시태그로 검색 기능
 	
 	

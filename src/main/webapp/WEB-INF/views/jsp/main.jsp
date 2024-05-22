@@ -36,7 +36,7 @@
   <div class="instagram-post">
     <div class="profile">
       <img src="../images/profile.jpg" alt="프로필 사진">
-      <span class="username user-font user-text-color">username1</span>
+      <span>username1</span>
     </div>
     <div class="post-content">
       <img src="../images/post-image1.jpg" alt="게시된 사진">
