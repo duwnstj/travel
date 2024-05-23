@@ -15,11 +15,23 @@ h2 {
   text-align: center;
   margin-bottom: 20px 0; /* 여백을 조정하여 게시물과의 간격을 줄입니다. */
 }
+.post {
+  transform: translateY(-70%); /* 요소를 위로 이동 */
+    max-width: 500px; /* 최대 너비 설정 */
+  max-height: 600px; /* 최대 높이 설정 */
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤바를 추가 */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  margin: 20px auto;
+  padding: 20px; 
+}
+
 
 /* 게시물 검색창 스타일 */
 .post-container {
-  max-width: 600px;
-  margin: 20px auto;
+  max-width: 500px; /* 게시글 폼의 최대 너비를 설정 */
+  margin: 20px auto; /* 상단과 하단에 여백을 주고 가운데 정렬 */
 }
 
 .search-container {
@@ -46,6 +58,12 @@ h2 {
   border-radius: 20px;
   transition: background-color 0.3s;
 }
+.interactions {
+  display: flex;
+  justify-content: space-between; /* 좋아요와 댓글 버튼 간격을 최대한 벌리기 */
+  align-items: center;
+}
+
 
 #search-button:hover {
   background-color: #3366cc; /* 진한 파란색 계열 */
@@ -135,6 +153,14 @@ h2 {
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   margin: 20px auto;
 }
+.instagram-post {
+  display: flex;
+  margin-bottom: 20px; /* 각 게시글 사이의 간격 조정 */
+   background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
 
 .post .profile,
 .instagram-post .profile {
@@ -143,12 +169,20 @@ h2 {
   align-items: center;
   height:80px;
 }
+.profile{
+	 display: flex;
+  align-items: center;
+  padding: 10px;
+}
 
 .profile img {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   margin-right: 10px;
+}
+.profile p {
+  margin: 0;
 }
 
 .username {
@@ -159,6 +193,10 @@ h2 {
 .instagram-post .post-content {
   padding: 10px;
   margin-bottom: 10px;
+  
+}
+.post-content {
+  padding: 10px;
 }
 
 .post-content p,
@@ -170,6 +208,19 @@ h2 {
 .instagram-post .post-content img {
   width: 30%;
   border-radius: 10px;
+}
+.user-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 10px; /* 제목과 다음 내용 사이 간격 조정 */
+}
+.user-font {
+  font-size: 16px;
+  margin: 0 0 10px; /* 각 내용들 사이 간격 조정 */
+}
+.user-updatedate {
+  font-style: italic;
+  color: #888; /* 업데이트 날짜 색상 */
 }
 
 /* 인스타그램 스타일의 게시물 폼 */

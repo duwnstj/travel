@@ -40,13 +40,13 @@
       <p><span>${mate_id}</span></p>
     </div>
     <div class="post-content">
-     <p class="user-title">${mate_title}</p>
-      <p class="user-font">${mate_cont}</p>
-      <p class="user-updatedate">${updatedate}</p>
-       <p class="user-mate_matching">${mate_matching}</p>
-       <p class="user-mate_sumnail">${mate_sumnail}</p>
-       <p class="user-mate_postuse">${mate_postuse}</p>
-       <p class="user-mate_limited">${mate_limited}</p>
+      <p class="user-title">제목:${mate_title}</p>
+      <p class="user-font">내용:${mate_cont}</p>
+      <p class="user-updatedate">업데이트날짜:${updatedate}</p>
+      <p class="user-mate_matching">매칭상태:${mate_matching}</p>
+      <p class="user-mate_sumnail">썸네일사진:${mate_sumnail}</p>
+      <p class="user-mate_postuse">게시판 사용가능 여부:${mate_postuse}</p>
+      <p class="user-mate_limited">제한 인원:${mate_limited}</p>
       <div class="interactions">
         <button class="like-button">좋아요</button>
         <button class="comment-button">댓글</button>
@@ -54,6 +54,7 @@
     </div>
   </div>
 </div>
+
 
 
 <jsp:include page="../include/footer.jsp" /> <!-- 외부 footer를 포함시킵니다. -->
