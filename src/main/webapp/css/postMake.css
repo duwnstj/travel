@@ -3,31 +3,32 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    height: 800px;
     background-color: white;
 }
 
 .header {
-    color: #black;
+    /* color: #black; */ /* black은 색상 이름이 아닌 키워드이므로 #을 제거해야 합니다. */
+    color: black; /* 수정: 색상 값을 black으로 설정합니다. */
     text-align: left;
-    padding: 20px 0  0px 40px;
+    padding: 20px 0 0 40px;
 }
 
-
-.header-title {//수정
+.header-title {
     margin: 0;
-    font-size: 24px; /* 제목 폰트 크기 설정 */
-    font-weight: bold; /* 제목 폰트 굵기 설정 */
-    text-transform: uppercase; /* 제목 텍스트 대문자로 변환 */
-    letter-spacing: 2px; /* 글자 사이 간격 설정 */
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-.header-title::after {//수정
-    content: ''; /* 가상 요소 추가 */
-    display: block; /* 블록 요소로 표시 */
-    width: 50px; /* 가상 요소 너비 설정 */
-    height: 2px; /* 가상 요소 높이 설정 */
-    background-color: #fff; /* 가상 요소 배경색 설정 */
-    margin: 10px auto; /* 가상 요소 수직 가운데 정렬 */
+.header-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    background-color: #fff;
+    margin: 10px auto;
 }
 
 .container {
@@ -79,6 +80,9 @@ body {
     font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+.input-container button:last-of-type {
+    margin-top: 10px; /* Add margin to separate buttons */
 }
 
 .input-container button:hover {

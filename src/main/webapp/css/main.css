@@ -8,12 +8,12 @@ body {
   min-height: 100vh;
 }
 
+
 /* 제목 스타일 */
 h2 {
   color: #333; /* 회색 계열의 글자색 사용 */
   text-align: center;
-  margin-top: 20px; /* 헤더와 제목 사이의 여백 추가 */
-  margin-bottom: 20px; /* 여백을 조정하여 게시물과의 간격을 줄입니다. */
+  margin-bottom: 20px 0; /* 여백을 조정하여 게시물과의 간격을 줄입니다. */
 }
 
 /* 게시물 검색창 스타일 */
@@ -141,6 +141,7 @@ h2 {
   padding: 10px;
   display: flex;
   align-items: center;
+  height:80px;
 }
 
 .profile img {
@@ -167,7 +168,7 @@ h2 {
 
 .post-content img,
 .instagram-post .post-content img {
-  width: 100%;
+  width: 30%;
   border-radius: 10px;
 }
 

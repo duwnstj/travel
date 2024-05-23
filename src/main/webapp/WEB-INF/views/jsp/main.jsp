@@ -6,6 +6,7 @@
 <h2 class="user-font">함께 여행을 떠나는 친구를 찾는 공간</h2>
   
 <div class="post-container">
+<div style="margin-bottom: 20px;"></div>
   <div class="search-container">
     <input type="text" placeholder="#해시태그로 검색해보세요..." id="search-input" class="user-font user-text-color"> <!-- 사용자 폰트 및 텍스트 색상 적용 -->
     <button type="button" id="search-button" class="user-background-color">검색</button> <!-- 사용자 배경색 적용 -->
@@ -31,17 +32,21 @@
   </div>
 </div>
 
-<div class="post-container">
+<div class="post">
   <!-- 인스타그램 스타일의 게시물 폼 추가 -->
   <div class="instagram-post">
     <div class="profile">
       <img src="../images/profile.jpg" alt="프로필 사진">
-      <span>username1</span>
+      <p><span>${mate_id}</span></p>
     </div>
     <div class="post-content">
-      <img src="../images/post-image1.jpg" alt="게시된 사진">
-      <p class="user-font">게시된 텍스트 내용</p>
-      <p class="user-font">게시된 날짜 및 시간</p>
+     <p class="user-title">${mate_title}</p>
+      <p class="user-font">${mate_cont}</p>
+      <p class="user-updatedate">${updatedate}</p>
+       <p class="user-mate_matching">${mate_matching}</p>
+       <p class="user-mate_sumnail">${mate_sumnail}</p>
+       <p class="user-mate_postuse">${mate_postuse}</p>
+       <p class="user-mate_limited">${mate_limited}</p>
       <div class="interactions">
         <button class="like-button">좋아요</button>
         <button class="comment-button">댓글</button>
@@ -50,23 +55,6 @@
   </div>
 </div>
 
-<div class="post-container">
-  <div class="instagram-post">
-    <div class="profile">
-      <img src="../images/profile.jpg" alt="프로필 사진">
-      <span class="username user-font user-text-color">username2</span>
-    </div>
-    <div class="post-content">
-      <img src="../images/post-image2.jpg" alt="게시된 사진">
-      <p class="user-font">게시된 텍스트 내용</p>
-      <p class="user-font">게시된 날짜 및 시간</p>
-      <div class="interactions">
-        <button class="like-button">좋아요</button>
-        <button class="comment-button">댓글</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <jsp:include page="../include/footer.jsp" /> <!-- 외부 footer를 포함시킵니다. -->
 <script src="../script/main.js"></script> <!-- 외부 JavaScript 파일 로드 -->

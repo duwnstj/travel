@@ -18,16 +18,36 @@ public class PostmakeController {
 
 		@Autowired
 		private PostService postService;
-	@Autowired
 	@GetMapping("/postMake")
 	public String postmake() {
 		return "/jsp/postMake";
-	}
-	//게시판에 정보 저장
-	@PostMapping("/postMake")
-	public ModelAndView post_make(Community_boardVO b ,HttpServletResponse response) {
-		this.postService.insertboard(b);
-		return null;
+		
+		
 	}
 
+	
+	
+	
+	//게시판에 정보 저장
+	@PostMapping("/post_make_Ok")
+	public ModelAndView post_make(Community_boardVO b ,HttpServletResponse response)
+	throws Exception{
+		this.postService.insertboard(b);
+		
+		ModelAndView am = new ModelAndView();
+		am.addObject("mate_id",b.getMate_id());
+		am.addObject("mate_hit",b.getMate_hit());
+		am.addObject("mate_title",b.getMate_title());
+		am.addObject("mate_cont",b.getMate_cont());
+		am.addObject("make_date",b.getMakedate());
+		am.addObject("updatedate",b.getUpdatedate());
+		am.addObject("mate_matching",b.getMate_matching());
+		am.addObject("mate_sumnail",b.getMate_sumnail());
+		am.setViewName("/jsp/main");
+		return am;
+		
+		
+		
+	}
+	
 }

@@ -1,11 +1,19 @@
 package net.daum.vo;
 
+
+
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,9 +41,15 @@ public class Community_boardVO {
 	private String mate_id;
 	private int mate_hit;
 	private String mate_title;
+	
+	@Column(length=4000)
 	private String mate_cont;
-	private String makedate;
-	private String updatedate;
+	
+	@CreationTimestamp //하이버네이트 기능으로 등록시점 날짜를 기록
+	private Timestamp makedate;//등록 날짜
+	
+	@UpdateTimestamp
+	private Timestamp updatedate;//하이버네이트 기능으로 업데이트 날짜 자동 기록
 	private int mate_matching;
 	private String mate_sumnail;
 	private int mate_postuse;
