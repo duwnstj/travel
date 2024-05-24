@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -36,9 +38,12 @@ public class Community_boardVO {
 
 	@Id // 기본키
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mate_noseq_gename")
-	private int mate_no;// 기본키
+	private Long mate_no;// 기본키
 
-	private String mate_id;
+	@ManyToOne
+	@JoinColumn(name="member_no")
+	private DermyMemberVO member_no;
+	
 	private int mate_hit;
 	private String mate_title;
 	

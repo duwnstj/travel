@@ -8,9 +8,12 @@
 
 <div class="container">
 	<div class="input-container">
-	<form action="/post_make_Ok" method="Post" >
-		<input type="text" id="post-title" placeholder="제목을 입력하세요...">
-		<textarea id="post-content" placeholder="내용을 입력하세요..."></textarea>
+	<form action="/post_make_Ok" method="Post" onsubmit="write_check()">
+	
+		<input type="text" name="mate_title" id="mate_title" placeholder="제목을 입력하세요...">
+		<br><span id="error_title"></span>
+		<textarea name="mate_cont" id="mate_cont" placeholder="내용을 입력하세요..."></textarea>
+		<br><span id="error_content"></span>
 		<input type="file" id="post-image" accept="image/*">
 		<!-- 이미지 업로드를 위한 input 추가 -->
 		<input type="text" id="post-tags" placeholder="태그를 입력하세요... (쉼표로 구분)">

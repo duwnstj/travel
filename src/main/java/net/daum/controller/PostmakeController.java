@@ -32,10 +32,11 @@ public class PostmakeController {
 	@PostMapping("/post_make_Ok")
 	public ModelAndView post_make(Community_boardVO b ,HttpServletResponse response)
 	throws Exception{
+		response.setContentType("text/html;charset=UTF-8");
 		this.postService.insertboard(b);
 		
 		ModelAndView am = new ModelAndView();
-		am.addObject("mate_id",b.getMate_id());
+		am.addObject("mate_id",b.getMember_no());
 		am.addObject("mate_hit",b.getMate_hit());
 		am.addObject("mate_title",b.getMate_title());
 		am.addObject("mate_cont",b.getMate_cont());

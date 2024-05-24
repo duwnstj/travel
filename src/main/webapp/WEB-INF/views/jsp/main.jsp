@@ -37,7 +37,7 @@
   <div class="instagram-post">
     <div class="profile">
       <img src="../images/profile.jpg" alt="프로필 사진">
-      <p><span>${mate_id}</span></p>
+      <p><span>아이디:${member_no}</span></p>
     </div>
     <div class="post-content">
       <p class="user-title">제목:${mate_title}</p>

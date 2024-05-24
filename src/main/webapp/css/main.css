@@ -31,6 +31,7 @@ h2 {
 /* 게시물 검색창 스타일 */
 .post-container {
   max-width: 500px; /* 게시글 폼의 최대 너비를 설정 */
+  
   margin: 20px auto; /* 상단과 하단에 여백을 주고 가운데 정렬 */
 }
 
