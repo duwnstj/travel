@@ -1,8 +1,6 @@
 package net.daum.vo;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -19,5 +17,6 @@ public class DermyMemberVO {
     
     private Long member_id;  
     private String username;
+    //도대체 뭐가 문제야
     private String password;
 }
