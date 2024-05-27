@@ -14,3 +14,8 @@ nocycle; --nocycle로 수정
 select mate_no_seq.nextval as "시퀀스 번호값" from dual;
 
 insert set 
+
+alter sequence repl_no_seq
+nocache;
+alter sequence repl_no_seq
+nocycle;

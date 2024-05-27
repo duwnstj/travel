@@ -3,14 +3,17 @@ package net.daum.vo;
 
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -40,10 +43,7 @@ public class Community_boardVO {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mate_noseq_gename")
 	private Long mate_no;// 기본키
 
-	@ManyToOne
-	@JoinColumn(name="member_no")
-	private DermyMemberVO member_no;
-	
+
 	private int mate_hit;
 	private String mate_title;
 	
@@ -59,5 +59,13 @@ public class Community_boardVO {
 	private String mate_sumnail;
 	private int mate_postuse;
 	private int mate_limited;
+	
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@JoinColumn(name="cm_board")
+	private List<Cm_replVO> repls;
+	
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@JoinColumn(name="cm_board")
+	private List<Cm_ImgVO> images;
 
 }
