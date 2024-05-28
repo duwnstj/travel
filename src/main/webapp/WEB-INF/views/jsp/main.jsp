@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../include/header.jsp" />
 
 <link rel="stylesheet" href="../css/main.css">
@@ -35,25 +36,26 @@
 <div class="post">
   <!-- 인스타그램 스타일의 게시물 폼 추가 -->
   <div class="instagram-post">
-    <div class="profile">
       <img src="../images/profile.jpg" alt="프로필 사진">
       <p><span>아이디:${member_no}</span></p>
-    </div>
+     <c:forEach var="p" items="${posts}"> 
     <div class="post-content">
-      <p class="user-title">제목:${mate_title}</p>
-      <p class="user-font">내용:${mate_cont}</p>
-      <p class="user-updatedate">업데이트날짜:${updatedate}</p>
-      <p class="user-mate_matching">매칭상태:${mate_matching}</p>
-      <p class="user-mate_sumnail">썸네일사진:${mate_sumnail}</p>
-      <p class="user-mate_postuse">게시판 사용가능 여부:${mate_postuse}</p>
-      <p class="user-mate_limited">제한 인원:${mate_limited}</p>
+      <p class="user-title">제목:${p.mate_title}</p>
+      <p class="user-font">내용:${p.mate_cont}</p>
+      <p class="user-updatedate">업데이트날짜:${p.updatedate}</p>
+      <p class="user-mate_matching">매칭상태:${p.mate_matching}</p>
+      <p class="user-mate_sumnail">썸네일사진:${p.mate_sumnail}</p>
+      <p class="user-mate_limited">제한 인원:${p.mate_limited}</p>
+      
       <div class="interactions">
         <button class="like-button">좋아요</button>
         <button class="comment-button">댓글</button>
+         </div>
       </div>
+      </c:forEach>
     </div>
   </div>
-</div>
+
 
 
 

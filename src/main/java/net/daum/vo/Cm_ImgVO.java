@@ -42,7 +42,7 @@ public class Cm_ImgVO {
 	private String uploadFile; // 파일의 저장 경로를 저장하는 필드
 	
 	 @Transient
-	private MultipartFile uploadFile2 ;
+	private MultipartFile uploadFile2 ;//실제 업로드할 파일정보를 저장 ,
 	
 	@CreationTimestamp
 	private Timestamp uploaddate;
