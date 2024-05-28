@@ -17,7 +17,7 @@
 		<textarea name="mate_cont" id="mate_cont" placeholder="내용을 입력하세요..."></textarea>
 		
 		<!-- 파일 첨부 기능을 위한 input 기능 -->
-		<input type="file" name="uploadFile2" id="uploadFile2" accept="image/*">
+		<input type="file" multiple name="uploadFile2" id="uploadFile2" accept="image/*">
 		
 		
 		<input type="text" name="mt_hashtag" id="mt_hashtag" placeholder="태그를 입력하세요... (쉼표로 구분)">
@@ -33,7 +33,7 @@
     
 		
 			<button type="submit" id="post-button">게시물 작성</button>
-			<input type="button" value="목록" onclick="location='main?page=${page}';">
+			
 		</form>
 	</div>
 </div>

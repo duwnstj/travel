@@ -13,4 +13,6 @@ public interface PostService {
 
 	List<Community_boardVO> getAllPosts();
 
+	List<Cm_ImgVO> getAllImages();
+
 }

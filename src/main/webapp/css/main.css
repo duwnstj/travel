@@ -16,7 +16,7 @@ h2 {
   margin-bottom: 20px 0; /* 여백을 조정하여 게시물과의 간격을 줄입니다. */
 }
 .post {
-  transform: translateY(-70%); /* 요소를 위로 이동 */
+  transform: translateY(-70%); /* 요소를 위로 이동 *
     max-width: 500px; /* 최대 너비 설정 */
   max-height: 600px; /* 최대 높이 설정 */
   overflow-y: auto; /* 내용이 넘칠 경우 스크롤바를 추가 */
@@ -31,13 +31,16 @@ h2 {
 /* 게시물 검색창 스타일 */
 .post-container {
   max-width: 500px; /* 게시글 폼의 최대 너비를 설정 */
-  
+  display:flex;
+  flex-direction: column;
   margin: 20px auto; /* 상단과 하단에 여백을 주고 가운데 정렬 */
+  align-items:center;
 }
 
 .search-container {
   text-align: center;
   padding: 10px;
+  width:800px;
 }
 
 #search-input {
@@ -75,7 +78,6 @@ h2 {
   display: flex;
   flex-direction: column; /* 세로로 배치합니다. */
   width: 200px;
-  padding: 30px;
   margin-bottom: 150px;
   margin-left: 20px;
   background-color: #F0FFFF; /* 연한 푸른 계열의 색상으로 사이드바 배경 설정 */
@@ -150,17 +152,28 @@ h2 {
 .post,
 .instagram-post {
   background-color: #fff;
+  width:100%;
+  max-width:500px;
   border-radius: 10px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   margin: 20px auto;
+  display:flex;
+  flex-direction: column;
 }
 .instagram-post {
   display: flex;
-  margin-bottom: 20px; /* 각 게시글 사이의 간격 조정 */
+  margin-bottom: 50px; /* 각 게시글 사이의 간격 조정 */
    background-color: #fff;
-  border-radius: 10px;
+   padding: 20px;
+  border-radius: 5px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
+  align-items: center;
+}
+.instagram-post img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .post .profile,
@@ -169,6 +182,15 @@ h2 {
   display: flex;
   align-items: center;
   height:80px;
+}
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 10px;
+}
+.image-grid img {
+  width: 100%;
+  height: auto;
 }
 .profile{
 	 display: flex;
@@ -198,6 +220,7 @@ h2 {
 }
 .post-content {
   padding: 10px;
+  flex:1;
 }
 
 .post-content p,
@@ -215,7 +238,7 @@ h2 {
   font-weight: bold;
   margin: 0 0 10px; /* 제목과 다음 내용 사이 간격 조정 */
 }
-.user-font {
+.user-cont {
   font-size: 16px;
   margin: 0 0 10px; /* 각 내용들 사이 간격 조정 */
 }

@@ -29,5 +29,10 @@ private PostDAO postDao;
 		
 		return this.postDao.getAllposts();
 	}
+	@Override
+	public List<Cm_ImgVO> getAllImages() {
+		
+		return this.postDao.getAllImages();
+	}
 
 }

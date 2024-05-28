@@ -13,6 +13,8 @@ public interface PostDAO {
 
 	List<Community_boardVO> getAllposts();
 
+	List<Cm_ImgVO> getAllImages();
+
 	
 
 }

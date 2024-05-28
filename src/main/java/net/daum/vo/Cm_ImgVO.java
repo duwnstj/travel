@@ -36,7 +36,8 @@ public class Cm_ImgVO {
 			strategy = GenerationType.SEQUENCE,
 			generator = "cmimg_no_seq_gename"
 			)
-	private Long cmimg_no;
+	private Long cmimg_no; //이미지 번호
+	
 	//부모 엔티티빈에서 외래키로 게시글번호 참조
 	
 	private String uploadFile; // 파일의 저장 경로를 저장하는 필드

@@ -32,8 +32,13 @@ public class PostDAOImpl implements PostDAO {
 	}
 	@Override
 	public List<Community_boardVO> getAllposts() {
-		
+		System.out.println(" \n 저장된 값 가져오기");
 		return this.postRepo.findAll();
+	}//게시글 출력
+	@Override
+	public List<Cm_ImgVO> getAllImages() {
+		System.out.println(" \n 이미지 불러오기");
+		return this.cmImgRepo.findAll();
 	}
 
 }
