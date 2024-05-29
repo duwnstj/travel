@@ -13,7 +13,11 @@ public interface PostDAO {
 
 	List<Community_boardVO> getAllposts();
 
-	List<Cm_ImgVO> getAllImages();
+	
+
+	
+
+	List<Cm_ImgVO> getImagesByMateNo(Long mateNo);
 
 	
 

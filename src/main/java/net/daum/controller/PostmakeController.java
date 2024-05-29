@@ -46,8 +46,12 @@ public class PostmakeController {
 	@PostMapping("/post_make_Ok")
 	public String post_make_ok(@RequestParam("uploadFile2") MultipartFile[] files ,Community_boardVO b , HttpServletRequest request) {
 		
+		
 		String uploadFolder = 
 				request.getServletContext().getRealPath("upload");
+		
+		this.postService.insertboard(b); // 게시판에 들어갈 제목,내용 등 저장
+		
 		
 		for(MultipartFile file : files) {
 			if(!file.isEmpty()) {//파일 리스트가 비어있지않다면
@@ -76,7 +80,9 @@ public class PostmakeController {
 					file.transferTo(saveFile);
 					
 					Cm_ImgVO cm = new Cm_ImgVO();
+					
 					cm.setUploadFile(fileDBName);
+					cm.setCm_board(b);//자식 엔티티에 부모 엔티티의 참조 설정
 					
 					this.postService.insertboard(cm); //업로드 된 이미지 저장
 				}catch(Exception e) {
@@ -86,29 +92,39 @@ public class PostmakeController {
 		}
 			
 		
-		this.postService.insertboard(b); // 게시판에 들어갈 제목,내용 등 저장
 		
-		return "redirect:/post_make";
+		
+		return "redirect:/community_board";
 	}
 	
 	//게시물 목록 조회
-	@RequestMapping(value="/post_make",method=RequestMethod.GET)
-	public ModelAndView post_make()
-	throws Exception{
+	@RequestMapping(value="/community_board",method=RequestMethod.GET)
+	public ModelAndView community_board() throws Exception{
+	
 		List<Community_boardVO> postList = postService.getAllPosts();//모든 게시글 데이터 가져오기
-		List<Cm_ImgVO> imageList = postService.getAllImages();//업로드 이미지 불러오기
+		for(Community_boardVO post : postList) {
+			Long mateNo = post.getMate_no();//게시글의 mate_no가져오기
+			List<Cm_ImgVO> imageList = postService.getImagesByMateNo(mateNo);//각 게시글에 해당하는 이미지 리스트 가져오기
+			post.setImages(imageList);//각 게시글에 이미지 리스트 설정
+		}
+		
 		ModelAndView po = new ModelAndView();
 		po.addObject("posts",postList);
-		po.addObject("images",imageList);
 		po.setViewName("/jsp/main");
 		
 		return po;
 		
-		//게시판 조회수 증가
-		
-		
-		
+	}
+	/*
+	 * //게시판 좋아요 기능
+	 * 
+	 * @PostMapping("/post_like") public ModelAndView post_like() throws Exception{
+	 * 
+	 * return null; }
+	 * 
+	 * 
+	 */
 		
 	}
 	
-}
+

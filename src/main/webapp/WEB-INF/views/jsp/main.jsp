@@ -53,14 +53,13 @@
 		<p class="user-mate_limited">제한 인원:${p.mate_limited}</p>
 			<div class="image-grid">
 			<c:forEach var="img" items="${images}">
-				<c:if test="${img.cmimg_no==p.mate_no}">
 					<img src="${pageContext.request.contextPath}/upload${img.uploadFile}"
 						alt="Upload image" />
-				</c:if>
+				
 			</c:forEach>
 		</div>
 		<div class="interactions">
-			<button class="like-button">좋아요</button>
+			<button class="like-button" name="like" id="like" onclick="post_like">좋아요</button>
 			<button class="comment-button">댓글</button>
 		</div>
 </div>

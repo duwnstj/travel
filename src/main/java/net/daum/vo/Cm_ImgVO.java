@@ -3,15 +3,15 @@ package net.daum.vo;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.web.multipart.MultipartFile;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -38,12 +38,13 @@ public class Cm_ImgVO {
 			)
 	private Long cmimg_no; //이미지 번호
 	
+	private String uploadFile; // 파일의 저장 경로를 저장하는 필드
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="mate_no") //외래키 컬럼명
+	private Community_boardVO cm_board;
 	//부모 엔티티빈에서 외래키로 게시글번호 참조
 	
-	private String uploadFile; // 파일의 저장 경로를 저장하는 필드
-	
-	 @Transient
-	private MultipartFile uploadFile2 ;//실제 업로드할 파일정보를 저장 ,
 	
 	@CreationTimestamp
 	private Timestamp uploaddate;

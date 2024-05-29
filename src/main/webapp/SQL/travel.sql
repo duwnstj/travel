@@ -22,7 +22,7 @@ select mate_no_seq.nextval as "시퀀스 번호값" from dual;
 
 alter sequence cmimg_no_seq
 nocache; -- Cm_img
-alter sequence cming_no_seq
+alter sequence cmimg_no_seq
 nocycle;
 
 

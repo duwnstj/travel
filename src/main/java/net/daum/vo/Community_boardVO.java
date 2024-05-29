@@ -12,7 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -30,7 +29,8 @@ import lombok.ToString;
 @ToString
 @Entity
 @SequenceGenerator(// 오라클 시퀀스 생성기
-		name = "mate_noseq_gename", sequenceName = "mate_no_seq", // 시퀀스 이름
+		name = "mate_noseq_gename", 
+		sequenceName = "mate_no_seq", // 시퀀스 이름
 		initialValue = 1, // 시퀀스 시작값
 		allocationSize = 1
 
@@ -63,14 +63,12 @@ public class Community_boardVO {
 	private int bbs_ref;//원본글과 답변글을 묶어주는 글 그룹번호 역할
 	private int bbs_level; //답변글 정렬 순서
 	
+	/*
+	 * @OneToMany(mappedBy="cm_board",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	 * private List<Cm_replVO> repls;//외래키로 댓글창에 기본키 참조
+	 */	
 	
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	@JoinColumn(name="cm_board")
-	private List<Cm_replVO> repls;//외래키로 댓글창에 기본키 참조
-	
-	
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	@JoinColumn(name="cm_board")
+	@OneToMany(mappedBy="cm_board",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<Cm_ImgVO> images;//외래키로 게시판 이미지 테이블에 기본키 참조
 
 }
