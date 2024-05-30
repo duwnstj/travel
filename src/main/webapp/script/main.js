@@ -104,3 +104,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
   window.addEventListener('resize', handleWindowResize);
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    var toggleButtons = document.querySelectorAll('.toggle-button');
+    toggleButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var options = this.parentElement.querySelector('.options');
+            // 클릭된 토글 버튼 아래에 옵션 요소를 나타내거나 감춥니다.
+            if (options.style.display === "block") {
+                options.style.display = "none";
+            } else {
+                options.style.display = "block";
+            }
+        });
+    });
+});

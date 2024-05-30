@@ -10,14 +10,23 @@ public interface PostDAO {
 	void insertboard(Community_boardVO b);
 
 	void insertboard(Cm_ImgVO cm);
-
+	
+	
+	
 	List<Community_boardVO> getAllposts();
 
-	
+	List<Cm_ImgVO> getAllImages();
 
 	
 
-	List<Cm_ImgVO> getImagesByMateNo(Long mateNo);
+	
+
+
+
+	
+	
+
+	
 
 	
 

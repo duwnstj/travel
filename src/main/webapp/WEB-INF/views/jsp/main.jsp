@@ -43,28 +43,53 @@
 
 
 <!-- 인스타그램 스타일의 게시물 폼 추가 -->
-<div class="instagram-post">
+<form method="post" action="post_edit_ok">
 	<c:forEach var="p" items="${posts}">
+	<div class="instagram-post">
+	
+<div class="post-content">
+	
 		<img src="../images/profile.jpg" alt="프로필 사진">
-		<div class="post-content">
+		
+<!-- 수정 및 삭제 토글 버튼 -->
+			<button type="button" class="toggle-button">옵션</button> <%--type="button"을 
+			안써주면 button태그자체가 디폴트값이 제출(submit)이라서 바로 제출이된다.  --%>
+			
+			<div class="options">
+				<ul>
+					<li><a href="../jsp/postMake.jsp" >게시물 수정하기</a></li>
+					<li><a href="#">게시물 삭제하기</a></li>
+				</ul>
+			</div>
+			
+
 			<p class="user-title">제목:${p.mate_title}</p>
 			<p class="user-cont">내용:${p.mate_cont}</p>
 			<p class="user-updatedate">업데이트날짜:${p.updatedate}</p>
-		<p class="user-mate_limited">제한 인원:${p.mate_limited}</p>
+			<p class="user-mate_limited">제한 인원:${p.mate_limited}</p>
 			<div class="image-grid">
-			<c:forEach var="img" items="${images}">
-					<img src="${pageContext.request.contextPath}/upload${img.uploadFile}"
+				<c:forEach var="img" items="${p.images}">
+					<img
+						src="${pageContext.request.contextPath}/upload${img.uploadFile}"
 						alt="Upload image" />
-				
-			</c:forEach>
+
+				</c:forEach>
+			</div>
+			<div class="interactions">
+			
+			
+				<button class="like-button" name="like" id="like"
+					onclick="post_like">좋아요</button>
+				<button class="comment-button">댓글</button>
+
+
+			</div>
 		</div>
-		<div class="interactions">
-			<button class="like-button" name="like" id="like" onclick="post_like">좋아요</button>
-			<button class="comment-button">댓글</button>
-		</div>
+		
+	
 </div>
 </c:forEach>
-</div>
+</form>
 
 
 

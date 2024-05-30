@@ -40,17 +40,9 @@ public class Cm_ImgVO {
 	
 	private String uploadFile; // 파일의 저장 경로를 저장하는 필드
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="mate_no") //외래키 컬럼명
-	private Community_boardVO cm_board;
-	//부모 엔티티빈에서 외래키로 게시글번호 참조
-	
 	
 	@CreationTimestamp
-	private Timestamp uploaddate;
-	
-	
-	
+	private Timestamp uploaddate;	
 
-	
+	private Long mateno2;
 }

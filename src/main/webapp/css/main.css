@@ -15,17 +15,6 @@ h2 {
   text-align: center;
   margin-bottom: 20px 0; /* 여백을 조정하여 게시물과의 간격을 줄입니다. */
 }
-.post {
-  transform: translateY(-70%); /* 요소를 위로 이동 *
-    max-width: 500px; /* 최대 너비 설정 */
-  max-height: 600px; /* 최대 높이 설정 */
-  overflow-y: auto; /* 내용이 넘칠 경우 스크롤바를 추가 */
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  margin: 20px auto;
-  padding: 20px; 
-}
 
 
 /* 게시물 검색창 스타일 */
@@ -149,26 +138,22 @@ h2 {
 }
 
 /* 게시글 스타일 */
-.post,
+
 .instagram-post {
-  background-color: #fff;
+	
   width:100%;
   max-width:500px;
   border-radius: 10px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  margin: 20px auto;
+  margin: 30px auto;
   display:flex;
   flex-direction: column;
-}
-.instagram-post {
-  display: flex;
-  margin-bottom: 50px; /* 각 게시글 사이의 간격 조정 */
+  position :relative;
    background-color: #fff;
-   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  align-items: center;
+    padding: 20px;
+     align-items: center;
 }
+
 .instagram-post img {
   width: 50px;
   height: 50px;
@@ -176,7 +161,7 @@ h2 {
   margin-right: 10px;
 }
 
-.post .profile,
+ .profile,
 .instagram-post .profile {
   padding: 10px;
   display: flex;
@@ -220,7 +205,9 @@ h2 {
 }
 .post-content {
   padding: 10px;
+  margin-bottom:10px;
   flex:1;
+  position:relative;
 }
 
 .post-content p,
@@ -269,3 +256,49 @@ h2 {
 .instagram-post .interactions .comment-button:hover {
   color: #4174d9;
 }
+
+.toggle-button {
+	 position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4174d9; /* 기본 색상 */
+  color: white;
+  font-size: 16px;
+  padding: 8px;
+  border: none;
+  border-radius: 5px; /* 더 작은 둥근 모서리 */
+  cursor: pointer;
+  transition: background-color 0.3s; /* 호버 효과를 위한 전환 효과 */ 
+}
+
+.toggle-button:focus {
+    outline: none;
+}
+.toggle-button:hover{
+	 background-color: #3366cc; /* 호버 효과에 따라 배경색 변경 */
+}
+
+.options {
+ display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  list-style-type: none;
+  padding: 0;
+  top : 50px; /* 버튼 아래로 조금 내림 */
+  right: -50px; /* 오른쪽으로 이동 */
+  border-radius: 5px; /* 더 작은 둥근 모서리 */
+}
+
+.options li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.options li:hover {
+    background-color: #ddd;
+}
+
+

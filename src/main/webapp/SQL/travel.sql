@@ -2,9 +2,22 @@
 
 select * from community_board;
 
+select max(mateno) from community_board;
+
 select * from CM_IMG;
 
 select * from CM_REPL;
+
+
+create sequence mate_no_seq
+start with 1
+increment by 1
+nocache
+nocycle;
+
+select mate_no_seq.nextval from dual;
+
+drop sequence mate_no_seq;
 
 
 drop table community_board;
