@@ -18,9 +18,9 @@ public class PostDAOImpl implements PostDAO {
 	@Autowired  
 	private CmImgRepository cmImgRepo;
 	
-	@Autowired
-	private SqlSession sqlSession;
 	
+	  @Autowired private SqlSession sqlSession;
+	 
 	@Override
 	public void insertboard(Community_boardVO b) {
 		
@@ -52,6 +52,13 @@ public class PostDAOImpl implements PostDAO {
 	public List<Cm_ImgVO> getAllImages() {
 		System.out.println(" \n 저장된 이미지 가져오기");
 		return this.cmImgRepo.findAll();
+	}
+
+
+	@Override// 게시된 게시글 번호를 기준으로 값 조회하기
+	public Community_boardVO getPostInfo(Long mateno) {
+		System.out.println(" \n 게시된 게시글 번호를 기준으로 값 조회하기");
+		return this.postRepo.getPostInfo(mateno);
 	}
 	
 	

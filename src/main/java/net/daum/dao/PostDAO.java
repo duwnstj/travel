@@ -17,6 +17,8 @@ public interface PostDAO {
 
 	List<Cm_ImgVO> getAllImages();
 
+	Community_boardVO getPostInfo(Long mateno);
+
 	
 
 	

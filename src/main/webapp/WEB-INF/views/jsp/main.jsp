@@ -43,7 +43,6 @@
 
 
 <!-- 인스타그램 스타일의 게시물 폼 추가 -->
-<form method="post" action="post_edit_ok">
 	<c:forEach var="p" items="${posts}">
 	<div class="instagram-post">
 	
@@ -56,10 +55,14 @@
 			안써주면 button태그자체가 디폴트값이 제출(submit)이라서 바로 제출이된다.  --%>
 			
 			<div class="options">
-				<ul>
-					<li><a href="../jsp/postMake.jsp" >게시물 수정하기</a></li>
-					<li><a href="#">게시물 삭제하기</a></li>
-				</ul>
+				
+				<form method="post" action="post_edit">
+				<input type="hidden" name="mateno" value="${p.mateno}">
+					<button type="submit" >게시물 수정하기</button>
+					</form>
+					
+					<button type="button" onclick="post_delete_ok">게시물 삭제하기</button>
+				
 			</div>
 			
 
@@ -89,7 +92,7 @@
 	
 </div>
 </c:forEach>
-</form>
+
 
 
 

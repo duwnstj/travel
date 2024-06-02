@@ -108,14 +108,35 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener("DOMContentLoaded", function() {
     var toggleButtons = document.querySelectorAll('.toggle-button');
     toggleButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(event) {
             var options = this.parentElement.querySelector('.options');
             // 클릭된 토글 버튼 아래에 옵션 요소를 나타내거나 감춥니다.
             if (options.style.display === "block") {
                 options.style.display = "none";
             } else {
+                // 모든 옵션창 닫기
+                closeAllOptions();
                 options.style.display = "block";
+            }
+            event.stopPropagation(); // 옵션 버튼을 클릭했을 때 문서의 다른 부분에 클릭 이벤트가 전달되지 않도록 합니다.
+        });
+    });
+
+    // 문서의 다른 부분을 클릭했을 때 옵션 팝업을 닫습니다.
+    document.addEventListener('click', function(event) {
+        var options = document.querySelectorAll('.options');
+        options.forEach(function(option) {
+            if (option.style.display === "block" && !option.contains(event.target)) {
+                option.style.display = "none";
             }
         });
     });
+
+    // 모든 옵션창을 닫습니다.
+    function closeAllOptions() {
+        var options = document.querySelectorAll('.options');
+        options.forEach(function(option) {
+            option.style.display = "none";
+        });
+    }
 });

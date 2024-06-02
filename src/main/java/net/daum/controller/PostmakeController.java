@@ -116,7 +116,31 @@ public class PostmakeController {
 	  return po;
 	 }
 	  
-	 //게시물 수정
+	 //게시물 수정폼으로 이동
+	 @PostMapping("post_edit")
+	public ModelAndView postedit(@RequestParam("mateno") Long mateno) {
+		 //게시글의 등록된 게시물의 정보를 조회하여 가져오는 로직
+		 Community_boardVO post=postService.getPostInfo(mateno);
+		 List<Cm_ImgVO> images=post.getImages();
+		 ModelAndView am = new ModelAndView(); 
+		 	am.addObject("postId",post.getMateno());
+		 	am.addObject("mate_title", post.getMate_title());
+		 	am.addObject("mate_cont",post.getMate_cont());
+		 	
+		 	//이미지 리스트가 비어있지않다면 mate_image로 추가
+		 	if(images != null && !images.isEmpty()) {
+		 		
+		 		am.addObject("mate_image",images);
+		 	}
+		  
+			
+			am.setViewName("/jsp/postEdit");
+			
+				 return am;
+	 }
+	 //게시물 수정 기능
+	 @PostMapping("post_edit_Ok")
+	 public ModelAndView
 	  
 	  
 	 

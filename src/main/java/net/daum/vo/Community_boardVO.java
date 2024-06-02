@@ -60,7 +60,6 @@ public class Community_boardVO {
 	private String mate_sumnail; //썸네일(이미지 썸네일)
 	private int mate_limited; //제한인원 설정
 	private String mt_hashtag; //해시태그
-	private String image; //게시글 번호 기준으로 이미지 여러장 담기
 	
 	/*
 	 * @OneToMany(mappedBy="cm_board",cascade=CascadeType.ALL,fetch=FetchType.EAGER)

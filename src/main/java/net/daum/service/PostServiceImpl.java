@@ -44,6 +44,12 @@ public class PostServiceImpl implements PostService {
 		return this.postDao.getAllImages();
 	}
 
+	@Override
+	public Community_boardVO getPostInfo(Long mateno) {
+		
+		return this.postDao.getPostInfo(mateno);
+	}
+
 	
 
 	
