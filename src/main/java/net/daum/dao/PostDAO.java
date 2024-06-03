@@ -19,6 +19,13 @@ public interface PostDAO {
 
 	Community_boardVO getPostInfo(Long mateno);
 
+	void editBoard(Community_boardVO cb);
+
+
+	void editImages(Cm_ImgVO cm);
+
+	
+
 	
 
 	

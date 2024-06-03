@@ -8,6 +8,8 @@ select * from CM_IMG;
 
 select * from CM_REPL;
 
+SELECT MAX(mateno) FROM Community_board;
+
 
 create sequence mate_no_seq
 start with 1

@@ -10,7 +10,7 @@
 
 <div class="container">
 	<div class="input-container">
-	<form method="Post" action="/post_edit_Ok" onsubmit="return write_check();"
+	<form method="Post" action="/post_edit_ok" onsubmit="return write_check();"
 	enctype="multipart/form-data"> <%--text와 file등 혼합된 경우 서버에 원할하게 보내기 위한 기능 --%>
 	
 		<input type="hidden" name="mateno" value="${postId}">
@@ -22,9 +22,9 @@
 		 
 		
 		<!-- 파일 첨부 기능을 위한 input 기능 -->
-		<input type="file" multiple name="uploadFile2"
+		<input type="file" multiple name="uploadFile"
 		
-		id="uploadFile2" accept="image/*">
+		id="uploadFile" accept="image/*">
 		
 		
 		<input type="text" name="mt_hashtag" id="mt_hashtag" placeholder="태그를 입력하세요... (쉼표로 구분)">
@@ -39,11 +39,10 @@
         </select>
     
 		
-			<button type="submit" id="post-button">게시물 작성</button>
+			<button type="submit" id="post-button">게시물 수정</button>
 			
 		</form>
 	</div>
 </div>
 
 <script src="../script/postMake.js"></script>
-

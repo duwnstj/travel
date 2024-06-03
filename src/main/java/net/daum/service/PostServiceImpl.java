@@ -5,7 +5,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import net.daum.dao.PostDAO;
@@ -50,6 +49,23 @@ public class PostServiceImpl implements PostService {
 		return this.postDao.getPostInfo(mateno);
 	}
 
+	@Override
+	public void editBoard(Community_boardVO cb) {
+		
+		this.postDao.editBoard(cb);
+		
+	}
+
+	@Override
+	public void editImages(Cm_ImgVO cm) {
+		this.postDao.editImages(cm);
+		
+	}
+
+	
+	
+
+	
 	
 
 	

@@ -1,6 +1,7 @@
 package net.daum.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +61,50 @@ public class PostDAOImpl implements PostDAO {
 		System.out.println(" \n 게시된 게시글 번호를 기준으로 값 조회하기");
 		return this.postRepo.getPostInfo(mateno);
 	}
+
+
+	@Override
+	public void editBoard(Community_boardVO cb) {
+		System.out.println(" \n 게시글 수정");
+		this.postRepo.save(cb);
+	}
+
+	 @Override
+	    public void editImages(Cm_ImgVO cm) {
+	        System.out.println("\n이미지 수정 시도: mate_no = " + cm.getMateno2());
+
+	        Cm_ImgVO existingImage = cmImgRepo.getByMateno2(cm.getMateno2());
+
+	        if (existingImage != null) {
+	            System.out.println("기존 이미지가 발견됨: " + existingImage.getUploadFile());
+
+	            existingImage.setUploadFile(cm.getUploadFile());
+
+	            cmImgRepo.save(existingImage);
+	            System.out.println("이미지 업데이트 완료: " + cm.getUploadFile());
+
+	        } else {
+	            System.out.println("기존 이미지가 없음, 새 이미지 생성");
+
+	            cmImgRepo.save(cm);
+	            System.out.println("새 이미지 저장 완료: " + cm.getUploadFile());
+	        }
+	    }
+	}
+
+	
+
+
+
 	
 	
-}
+	
+	
+	
+
+	
+	
+
 	
 	
 
