@@ -21,11 +21,11 @@ public interface PostService {
 
 	void editBoard(Community_boardVO cb);
 
-	
+	void editImages(Long mateno, List<String> fileDBNames);
+
+	void delpost(Long mateno);
 
 	
-
-	void editImages(Cm_ImgVO cm);
 
 	
 

@@ -8,9 +8,12 @@ select * from CM_IMG;
 
 select * from CM_REPL;
 
+select * from member;
+
 SELECT MAX(mateno) FROM Community_board;
 
 
+insert into MEMBER (member_id) values ('ddd@naver.com');
 create sequence mate_no_seq
 start with 1
 increment by 1

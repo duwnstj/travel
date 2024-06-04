@@ -22,7 +22,11 @@ public interface PostDAO {
 	void editBoard(Community_boardVO cb);
 
 
-	void editImages(Cm_ImgVO cm);
+	void editImages(Long mateno, List<String> fileDBNames);
+
+	void delpost(Long mateno);
+
+	
 
 	
 

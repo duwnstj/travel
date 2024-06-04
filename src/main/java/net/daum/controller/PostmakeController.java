@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -156,6 +155,7 @@ public class PostmakeController {
 		  //게시물 정보 저장 
 		  this.postService.editBoard(cb);
 		  
+		  List<String> fileDBNames = new ArrayList<>();
 		  for (MultipartFile file : uploadFile) {
 				if (!file.isEmpty()) {// 파일 리스트가 비어있지않다면
 					String originalFilename = file.getOriginalFilename(); // file 원래 이름
@@ -178,21 +178,14 @@ public class PostmakeController {
 					String refileName = "cmimg" + year + month + date + random + "." + fileExtension;// 파일명 랜덤값만
 					String fileDBName = "/" + year + "-" + month + "-" + date + "/" + refileName;// 데이터 베이스에 저장하기위한
 																									// 파일명(전체경로와 파일명)
-
-					try {
-						File saveFile = new File(homedir + "/", refileName);
-						file.transferTo(saveFile);
-						
-						Cm_ImgVO cm = new Cm_ImgVO();
-						cm.setUploadFile(fileDBName);
-						cm.setMateno2(mateno);
-						
-						this.postService.editImages(cm);
-					}catch(Exception e) {
-						e.printStackTrace();
-						}
-					}
+					File saveFile = new File(homedir, refileName);
+					file.transferTo(saveFile);
+					
+					fileDBNames.add(fileDBName);
+				}
 		  }
+		  //이미지 정보 저장 및 업데이트
+		  postService.editImages(mateno,fileDBNames);
 		  
 		  
 		  ModelAndView an = new ModelAndView(); 
@@ -200,5 +193,50 @@ public class PostmakeController {
 		  an.setViewName("redirect:/community_board"); 
 		  return an;
 		  }
-		 
+		  
+		  //게시물 삭제 
+		  @PostMapping("post_del_ok")
+		  public String post_del_ok(@RequestParam("mateno") Long mateno, HttpServletResponse response, HttpServletRequest request) 
+		          throws Exception {
+		      response.setContentType("text/html;charset=UTF-8");
+		      String uploadFolder = request.getServletContext().getRealPath("upload");
+
+		      // mateno를 사용하여 삭제할 게시물을 조회
+		      Community_boardVO cb = this.postService.getPostInfo(mateno);
+
+		      if (cb != null) {
+		          System.out.println("게시물 찾음: " + cb.toString());
+
+		          // 첨부 파일이 있는 경우 삭제
+		          List<Cm_ImgVO> images = cb.getImages();
+		          if (images != null && !images.isEmpty()) {
+		              System.out.println("이미지 목록: " + images.toString());
+		              for (Cm_ImgVO img : images) {
+		                  String imagePath = img.getUploadFile();
+		                  File delFile = new File(uploadFolder + imagePath);
+		                  if (delFile.exists()) {
+		                      delFile.delete();
+		                  } else {
+		                      System.out.println("파일을 찾을 수 없음: " + imagePath);
+		                  }
+		              }
+		          } else {
+		              System.out.println("이미지가 없음");
+		          }
+
+		          // 게시물 삭제
+		          this.postService.delpost(mateno);
+
+		          return "redirect:/community_board";
+		      } else {
+		          System.out.println("게시물을 찾을 수 없음: " + mateno);
+		      }
+
+		      // 게시물을 찾지 못한 경우 경고 메시지를 표시하고 메인 페이지로 리다이렉트
+		      response.getWriter().println("<script>alert('삭제할 게시물을 찾을 수 없습니다.');location.href='/community_board';</script>");
+		      return null;
+		  }
+		  
+		  //
 }
+

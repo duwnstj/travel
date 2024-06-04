@@ -20,6 +20,7 @@
 		<textarea name="mate_cont" id="mate_cont" 
 		 placeholder="내용을 입력하세요...">${mate_cont}</textarea>
 		 
+
 		
 		<!-- 파일 첨부 기능을 위한 input 기능 -->
 		<input type="file" multiple name="uploadFile"
@@ -29,14 +30,7 @@
 		
 		<input type="text" name="mt_hashtag" id="mt_hashtag" placeholder="태그를 입력하세요... (쉼표로 구분)">
 		
-        <label for="limit-select">톡방 제한인원을 선택하세요 최대 4명</label>
-        <select id="limit-select" name="limit-select">
-            <option value="" disabled selected>선택하세요</option>
-            <option value="1">1명</option>
-            <option value="2">2명</option>
-            <option value="3">3명</option>
-            <option value="4">4명</option>
-        </select>
+     
     
 		
 			<button type="submit" id="post-button">게시물 수정</button>

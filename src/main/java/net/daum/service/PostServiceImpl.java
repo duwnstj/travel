@@ -56,11 +56,20 @@ public class PostServiceImpl implements PostService {
 		
 	}
 
+	
+
 	@Override
-	public void editImages(Cm_ImgVO cm) {
-		this.postDao.editImages(cm);
+	public void editImages(Long mateno, List<String> fileDBNames) {
+		this.postDao.editImages(mateno , fileDBNames);
+	}
+
+	@Override
+	public void delpost(Long mateno) {
+		this.postDao.delpost(mateno);
 		
 	}
+
+	
 
 	
 	

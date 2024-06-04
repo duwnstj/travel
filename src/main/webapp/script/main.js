@@ -140,3 +140,13 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
+ function del_check(){
+	return confirm("정말로 이 게시물을 삭제하겠습니까?");
+   
+ }
+ 
+ 
+
+
+

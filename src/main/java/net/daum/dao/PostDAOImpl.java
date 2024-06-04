@@ -69,27 +69,37 @@ public class PostDAOImpl implements PostDAO {
 		this.postRepo.save(cb);
 	}
 
-	 @Override
-	    public void editImages(Cm_ImgVO cm) {
-	        System.out.println("\n이미지 수정 시도: mate_no = " + cm.getMateno2());
 
-	        Cm_ImgVO existingImage = cmImgRepo.getByMateno2(cm.getMateno2());
+	@Override
+	public void editImages(Long mateno, List<String> fileDBNames) {
+		Community_boardVO post = postRepo.getPostInfo(mateno);
+		
+		//기존 이미지 삭제
+		if(post.getImages() != null) {
+			cmImgRepo.deleteAll(post.getImages());
+		}
+		//새 이미지 저장
+		for(String fileDBName : fileDBNames) {
+			Cm_ImgVO newImage = new Cm_ImgVO();
+			newImage.setMateno2(mateno);
+			newImage.setUploadFile(fileDBName);
+			cmImgRepo.save(newImage);
+		}
+		
+	}
 
-	        if (existingImage != null) {
-	            System.out.println("기존 이미지가 발견됨: " + existingImage.getUploadFile());
 
-	            existingImage.setUploadFile(cm.getUploadFile());
+	@Override
+	public void delpost(Long mateno) {
+		System.out.println(" \n 게시물 삭제");
+		this.postRepo.deleteById(mateno);
+		
+	}
 
-	            cmImgRepo.save(existingImage);
-	            System.out.println("이미지 업데이트 완료: " + cm.getUploadFile());
 
-	        } else {
-	            System.out.println("기존 이미지가 없음, 새 이미지 생성");
+	
 
-	            cmImgRepo.save(cm);
-	            System.out.println("새 이미지 저장 완료: " + cm.getUploadFile());
-	        }
-	    }
+	 
 	}
 
 	

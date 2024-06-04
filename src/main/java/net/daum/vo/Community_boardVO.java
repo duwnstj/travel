@@ -45,7 +45,6 @@ public class Community_boardVO {
 	private Long mateno;// 기본키 게시글 번호
 
 
-	private int mate_hit; //조회수
 	private String mate_title; //제목
 	
 	@Column(length=4000)
@@ -57,8 +56,7 @@ public class Community_boardVO {
 	@UpdateTimestamp
 	private Timestamp updatedate;//하이버네이트 기능으로 업데이트 날짜 자동 기록
 	
-	private String mate_sumnail; //썸네일(이미지 썸네일)
-	private int mate_limited; //제한인원 설정
+	
 	private String mt_hashtag; //해시태그
 	
 	/*

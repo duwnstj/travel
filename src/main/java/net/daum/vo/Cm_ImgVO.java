@@ -43,6 +43,6 @@ public class Cm_ImgVO {
 	
 	@CreationTimestamp
 	private Timestamp uploaddate;	
-
+	
 	private Long mateno2;
 }

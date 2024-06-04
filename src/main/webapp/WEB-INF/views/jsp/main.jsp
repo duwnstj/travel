@@ -47,8 +47,9 @@
 	<div class="instagram-post">
 	
 <div class="post-content">
-	
+		
 		<img src="../images/profile.jpg" alt="프로필 사진">
+		<p class="user-id">아이디:</p>
 		
 <!-- 수정 및 삭제 토글 버튼 -->
 			<button type="button" class="toggle-button">옵션</button> <%--type="button"을 
@@ -60,19 +61,19 @@
 				<input type="hidden" name="mateno" value="${p.mateno}">
 					<button type="submit" >게시물 수정하기</button>
 					</form>
-					
-					<button type="button" onclick="post_delete_ok">게시물 삭제하기</button>
-				
+					<form method="post" action="post_del_ok" onsubmit="return del_check();">
+					<input type="hidden" name="mateno" value="${p.mateno}">
+					<button type="submit">게시물 삭제하기</button>
+					</form>
 			</div>
 			
 
 			<p class="user-title">제목:${p.mate_title}</p>
 			<p class="user-cont">내용:${p.mate_cont}</p>
 			<p class="user-updatedate">업데이트날짜:${p.updatedate}</p>
-			<p class="user-mate_limited">제한 인원:${p.mate_limited}</p>
 			<div class="image-grid">
 				<c:forEach var="img" items="${p.images}">
-					<img
+					 <img
 						src="${pageContext.request.contextPath}/upload${img.uploadFile}"
 						alt="Upload image" />
 
