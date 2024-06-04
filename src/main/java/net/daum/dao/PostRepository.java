@@ -2,12 +2,15 @@ package net.daum.dao;
 
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import net.daum.vo.Community_boardVO;
+import net.daum.vo.MemberVO;
 
 public interface PostRepository extends JpaRepository<Community_boardVO, Long> {
 
@@ -20,6 +23,10 @@ public interface PostRepository extends JpaRepository<Community_boardVO, Long> {
 	//게시물 이미지 조회
 	@Query("SELECT p FROM Community_boardVO p LEFT JOIN FETCH p.images WHERE p.mateno = :mateno")
 	public Community_boardVO getPostInfo(@Param("mateno") Long mateno);
+
+
+	@Query("select c.member_id from MemberVO c")
+	public List<MemberVO> selectmemberid();
 
 	
 

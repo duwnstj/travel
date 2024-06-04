@@ -1,7 +1,6 @@
 package net.daum.dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import net.daum.vo.Cm_ImgVO;
 import net.daum.vo.Community_boardVO;
+
+
 
 @Repository
 public class PostDAOImpl implements PostDAO {
@@ -19,11 +20,17 @@ public class PostDAOImpl implements PostDAO {
 	@Autowired  
 	private CmImgRepository cmImgRepo;
 	
+	@Autowired
+	private MemberRepository memberRepo;
+	
 	
 	  @Autowired private SqlSession sqlSession;
 	 
+	 
+
 	@Override
 	public void insertboard(Community_boardVO b) {
+		
 		
 		System.out.println(" \n 게시물 저장과 업로드된 이미지 저장 =========>");
 		Long mate_no=this.sqlSession.selectOne("mateNoSeq_Find");
@@ -41,6 +48,7 @@ public class PostDAOImpl implements PostDAO {
 	}	
 	
 	
+
 	
 	@Override
 	public List<Community_boardVO> getAllposts() {
@@ -96,6 +104,10 @@ public class PostDAOImpl implements PostDAO {
 		
 	}
 
+
+	
+
+	
 
 	
 

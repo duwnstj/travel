@@ -5,6 +5,8 @@ import java.util.List;
 import net.daum.vo.Cm_ImgVO;
 import net.daum.vo.Community_boardVO;
 
+
+
 public interface PostDAO {
 
 	void insertboard(Community_boardVO b);
@@ -25,6 +27,10 @@ public interface PostDAO {
 	void editImages(Long mateno, List<String> fileDBNames);
 
 	void delpost(Long mateno);
+
+
+
+
 
 	
 

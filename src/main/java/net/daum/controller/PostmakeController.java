@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import net.daum.service.PostService;
 import net.daum.vo.Cm_ImgVO;
 import net.daum.vo.Community_boardVO;
+import net.daum.vo.PageVO;
+
 
 @Controller
 public class PostmakeController {
@@ -45,8 +47,10 @@ public class PostmakeController {
 			HttpServletRequest request) {
 
 		String uploadFolder = request.getServletContext().getRealPath("upload");
+		
 
 		this.postService.insertboard(b); // 게시판에 들어갈 제목,내용 등 저장
+		
 
 		for (MultipartFile file : files) {
 			if (!file.isEmpty()) {// 파일 리스트가 비어있지않다면
@@ -85,7 +89,7 @@ public class PostmakeController {
 				}
 			}
 		}
-
+		
 		return "redirect:/community_board";
 	}
 
@@ -93,9 +97,19 @@ public class PostmakeController {
 	 // 게시물 목록 조회
 	 
 	 @RequestMapping(value="/community_board",method=RequestMethod.GET) 
-	 public ModelAndView community_board() throws Exception{
+	 public ModelAndView community_board(HttpServletRequest request , PageVO p ) throws Exception{
 	  
-	  List<Community_boardVO> postList = postService.getAllPosts();//모든 게시글 데이터
+		 int page =1; //현재 쪽번호
+		 int limit = 7; //현재페이지에 보여지는 목록개수 ,한페이지에 10개 목록이 보여지는 페이징
+		 if(request.getParameter("page") != null) {
+			 page=Integer.parseInt(request.getParameter("page"));
+		 }
+		 p.setStartrow((page-1)*10+1); //시작행 번호
+		 p.setEndrow(p.getStartrow()+limit-1); //끝행 번호
+		 
+		 
+		
+		 List<Community_boardVO> postList = postService.getAllPosts();//모든 게시글 데이터
 	  //가져오기
 	  
 	  for(Community_boardVO post : postList) {

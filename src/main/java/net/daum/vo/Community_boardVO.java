@@ -9,12 +9,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -67,5 +65,9 @@ public class Community_boardVO {
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="mateno2")
 	private List<Cm_ImgVO> images;//외래키로 게시판 이미지 테이블에  게시판의 기본키 참조
+	
+	@ManyToOne
+	@JoinColumn(name="memberid")
+	private MemberVO member;
 
 }
