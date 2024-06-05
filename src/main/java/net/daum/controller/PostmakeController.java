@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import net.daum.service.PostService;
 import net.daum.vo.Cm_ImgVO;
 import net.daum.vo.Community_boardVO;
-import net.daum.vo.PageVO;
 
 
 @Controller
@@ -94,38 +96,31 @@ public class PostmakeController {
 	}
 
 	
-	 // 게시물 목록 조회
+	 // 게시물 목록 조회,페이징
 	 
 	 @RequestMapping(value="/community_board",method=RequestMethod.GET) 
-	 public ModelAndView community_board(HttpServletRequest request , PageVO p ) throws Exception{
+	 public ModelAndView community_board(HttpServletRequest request) throws Exception{
 	  
 		 int page =1; //현재 쪽번호
-		 int limit = 7; //현재페이지에 보여지는 목록개수 ,한페이지에 10개 목록이 보여지는 페이징
+		 int limit = 7; //현재페이지에 보여지는 목록개수 ,한페이지에 7개 목록이 보여지는 페이징
+		 
 		 if(request.getParameter("page") != null) {
 			 page=Integer.parseInt(request.getParameter("page"));
 		 }
-		 p.setStartrow((page-1)*10+1); //시작행 번호
-		 p.setEndrow(p.getStartrow()+limit-1); //끝행 번호
 		 
+		 //페이지 정보를 기반으로 Pageable 객체 생성
+		 Pageable pageable = PageRequest.of(page -1,limit);//jpa의 페이지는 0부터 시작
+		  
+		 //페이징 된 게시물 요소 가져오기
+		 Page<Community_boardVO> postPage = postService.getAllPosts(pageable);
 		 
 		
-		 List<Community_boardVO> postList = postService.getAllPosts();//모든 게시글 데이터
-	  //가져오기
-	  
-	  for(Community_boardVO post : postList) {
-		  Long mateNo = post.getMateno(); //게시글의 mate_no 가져오기
-		  List<Cm_ImgVO> postImages = new ArrayList<>();
-		  
-		  for(Cm_ImgVO img : postService.getAllImages()) {
-			  if(img.getMateno2() != null && img.getMateno2().equals(mateNo)) {
-				  postImages.add(img);
-			  }
-		  }
-		  post.setImages(postImages);
-	  }
+		
 	  
 	  ModelAndView po = new ModelAndView();
-	  po.addObject("posts",postList);
+	  po.addObject("posts",postPage.getContent());
+	  po.addObject("totalPages",postPage.getTotalPages());
+	  po.addObject("currentPage",page);
 	  po.setViewName("/jsp/main");
 	  
 	  return po;
@@ -136,17 +131,12 @@ public class PostmakeController {
 	public ModelAndView postedit(@RequestParam("mateno") Long mateno) {
 		 //게시글의 등록된 게시물의 정보를 조회하여 가져오는 로직
 		 Community_boardVO post=postService.getPostInfo(mateno);
-		 List<Cm_ImgVO> images=post.getImages();
+		 
 		 ModelAndView am = new ModelAndView(); 
 		 	am.addObject("postId",post.getMateno());
 		 	am.addObject("mate_title", post.getMate_title());
 		 	am.addObject("mate_cont",post.getMate_cont());
-		 	
-		 	//이미지 리스트가 비어있지않다면 mate_image로 추가
-		 	if(images != null && !images.isEmpty()) {
-		 		
-		 		am.addObject("mate_image",images);
-		 	}
+		 	am.addObject("mate_image",post.getImages());//이미지 리스트 추가
 		  
 			
 			am.setViewName("/jsp/postEdit");
@@ -251,6 +241,20 @@ public class PostmakeController {
 		      return null;
 		  }
 		  
-		  //
+		  //검색기능(해시태그는 여러가지 담길 수 있고 ,를 통해 구분한다)
+		  @PostMapping("search_Ok")
+		  public ModelAndView search_ok(@RequestParam("searchInput") String searchInput,
+				  ModelAndView a) {
+			  
+			  List<Community_boardVO> searchResults = postService.searchPosts(searchInput);
+			  
+			  
+			  a.addObject("searchResults",searchResults);
+			  a.setViewName("redirect:/community_board");
+			
+			  
+			  
+			  return a;
+		  }
 }
 

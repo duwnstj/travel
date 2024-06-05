@@ -46,9 +46,9 @@ public class MemberVO {
    @CreationTimestamp
    private Timestamp member_joinDate;
    
-   @OneToMany(mappedBy ="member")
-   private List<Community_boardVO> cmboard = new ArrayList<>();
-   
+//   @OneToMany(mappedBy ="member")
+//   private List<Community_boardVO> cmboard = new ArrayList<>();
+//   
 
    
 }

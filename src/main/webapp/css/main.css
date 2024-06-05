@@ -95,48 +95,6 @@ h2 {
   color: #4174d9;
 }
 
-/* 팝업 스타일 */
-.container3 {
-  position: relative;
-  margin-left: 20px;
-  width: 200px;
-}
-
-.popup {
-  width: 300px;
-  height: 400px;
-  position: absolute;
-  background-color: #fff;
-  border: 3px solid black;
-  padding: 20px;
-  z-index: 999;
-  display: none;
-  border-radius: 20px;
-}
-
-.popup.active {
-  display: block;
-}
-
-#openPopup,
-#closePopup {
-  background-color: #4174d9;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 20px; /* 더 둥근 버튼을 위해 변경합니다. */
-}
-
-#openPopup:hover,
-#closePopup:hover {
-  background-color: #3366cc; /* 버튼에 호버 효과를 추가합니다. */
-}
-
 /* 게시글 스타일 */
 
 .instagram-post {
@@ -301,14 +259,30 @@ h2 {
     background-color: #ddd;
 }
 
-#load-more-button {
-    display: inline-block; /* 인라인 블록 요소로 표시 */
-    margin-top: 20px; /* 위쪽 여백 추가 */
-    padding: 10px 20px; /* 내부 여백 추가 */
-    font-size: 16px; /* 폰트 크기 설정 */
-    background-color: #008CBA; /* 배경색 설정 */
-    color: white; /* 텍스트 색상 설정 */
-    border: none; /* 테두리 없음 */
-    border-radius: 5px; /* 테두리 모서리 둥글게 */
-    cursor: pointer; /* 포인터 커서로 변경 */
-}
+
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        color: #007bff;
+        text-decoration: none;
+        padding: 8px 16px;
+        margin: 0 5px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .pagination a:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .pagination .active {
+        background-color: #007bff;
+        color: #fff;
+    }

@@ -61,37 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
     event.stopPropagation();
   }
 
-  function handleOpenPopupClick(event) {
-    popup.style.display = "block";
-    event.stopPropagation();
-  }
 
-  function handleClosePopupClick(event) {
-    popup.style.display = "none"; 
-    event.stopPropagation();
-  }
-  
-  popup.addEventListener('mousedown', handleDragStart);
-  document.addEventListener('mouseup', handleDragEnd);
-  document.addEventListener('mousemove', handleMouseMove);
-  document.getElementById("search-button").addEventListener("click", handleSearchButtonClick);
-  document.getElementById("openPopup").addEventListener("click", handleOpenPopupClick);
-  document.getElementById("closePopup").addEventListener("click", handleClosePopupClick);
-
-  // 드래그가 끝나면 다시 transition을 적용하여 부드러운 이동 효과를 제공합니다.
-  document.addEventListener('mouseup', function() {
-    popup.style.transition = 'left 0.3s, top 0.3s';
-    // 드래그가 끝날 때 커서 모양을 기본값으로 변경합니다.
-    document.body.style.cursor = 'default';
-  });
-
-  // 드래그가 끝나면 마우스 커서도 이동을 멈춥니다.
-  document.addEventListener('mouseleave', function() {
-    if (isDragging) {
-      isDragging = false;
-      document.body.style.cursor = 'default';
-    }
-  });
 
   // 팝업창이 화면을 벗어나지 않도록 설정
   function handleWindowResize() {
@@ -146,7 +116,29 @@ document.addEventListener("DOMContentLoaded", function() {
    
  }
  
+ function search(){
+	var searchInput = document.getElementById("search-input").value.trim();
+	var searchArray = searchInput.split(",");//,를 기준으로 split함수를 사용하면 배열로 반환해준다 
+	
+	for(var i =0; i<searchArray.length;i++){
+		var searchTerm = searchArray[i].trim();
+		
+		if(searchTerm.startsWith("#")){
+			//해시태그인 경우 #을 제거하고 서버로 전송
+			searchTerm = searchTerm.substring(1).trim
+		}
+		
+		searchArray[i] = searchTerm;
+	}
+	//쉼표로 구분된 검색어를 다시 합쳐서 input 요소에 설정
+	
+	document.getElementById("search-input").value = searchArray.join(",");
+	
+	return true;
+	
+	
  
+ }
 
 
 

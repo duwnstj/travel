@@ -66,8 +66,8 @@ public class Community_boardVO {
 	@JoinColumn(name="mateno2")
 	private List<Cm_ImgVO> images;//외래키로 게시판 이미지 테이블에  게시판의 기본키 참조
 	
-	@ManyToOne
-	@JoinColumn(name="memberid")
-	private MemberVO member;
+//	@ManyToOne
+//	@JoinColumn(name="memberid")
+//	private MemberVO member;
 
 }

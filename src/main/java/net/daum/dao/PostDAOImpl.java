@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import net.daum.vo.Cm_ImgVO;
@@ -19,10 +21,6 @@ public class PostDAOImpl implements PostDAO {
 	
 	@Autowired  
 	private CmImgRepository cmImgRepo;
-	
-	@Autowired
-	private MemberRepository memberRepo;
-	
 	
 	  @Autowired private SqlSession sqlSession;
 	 
@@ -48,19 +46,12 @@ public class PostDAOImpl implements PostDAO {
 	}	
 	
 	
-
 	
 	@Override
-	public List<Community_boardVO> getAllposts() {
-		System.out.println(" \n 저장된 값 조회하기");
-		return this.postRepo.findAll();
-	}//게시글 출력
-
-
-	@Override
-	public List<Cm_ImgVO> getAllImages() {
-		System.out.println(" \n 저장된 이미지 가져오기");
-		return this.cmImgRepo.findAll();
+	public Page<Community_boardVO> getAllposts(Pageable pageable) {
+		System.out.println(" \n 페이징된 게시물 요소 가져오기");
+	
+		return this.postRepo.getAllPosts(pageable);
 	}
 
 
@@ -103,6 +94,26 @@ public class PostDAOImpl implements PostDAO {
 		this.postRepo.deleteById(mateno);
 		
 	}
+
+
+	@Override
+	public List<Community_boardVO> searchPosts(String searchInput) {
+		System.out.println(" \n 게시물 검색");
+		
+		
+		return this.postRepo.searchPosts(searchInput);
+		
+	}
+
+
+	
+
+
+	
+
+
+	
+
 
 
 	

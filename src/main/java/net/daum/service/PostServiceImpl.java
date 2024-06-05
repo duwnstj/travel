@@ -3,6 +3,8 @@ package net.daum.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import net.daum.dao.PostDAO;
@@ -32,15 +34,9 @@ public class PostServiceImpl implements PostService {
 
 	
 	@Override
-	public List<Community_boardVO> getAllPosts() {
-
-		return this.postDao.getAllposts();
-	}
-
-	@Override
-	public List<Cm_ImgVO> getAllImages() {
+	public Page<Community_boardVO> getAllPosts(Pageable pageable) {
 		
-		return this.postDao.getAllImages();
+		return this.postDao.getAllposts(pageable);
 	}
 
 	@Override
@@ -68,6 +64,17 @@ public class PostServiceImpl implements PostService {
 		this.postDao.delpost(mateno);
 		
 	}
+
+	
+	@Override
+	public List<Community_boardVO> searchPosts(String searchInput) {
+		return this.postDao.searchPosts(searchInput);
+	}//검색 기능
+
+	
+	
+
+	
 
 	
 	
