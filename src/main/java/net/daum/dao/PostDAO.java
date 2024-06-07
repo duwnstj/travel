@@ -30,7 +30,8 @@ public interface PostDAO {
 
 	void delpost(Long mateno);
 
-	List<Community_boardVO> searchPosts(String searchInput);
+
+	Page<Community_boardVO> searchPosts(String searchInput, int page, int limit);
 
 
 

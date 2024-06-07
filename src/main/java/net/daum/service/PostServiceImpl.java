@@ -65,11 +65,11 @@ public class PostServiceImpl implements PostService {
 		
 	}
 
-	
 	@Override
-	public List<Community_boardVO> searchPosts(String searchInput) {
-		return this.postDao.searchPosts(searchInput);
-	}//검색 기능
+	public Page<Community_boardVO> searchPosts(String searchInput, int page, int limit) {
+		
+		return this.postDao.searchPosts(searchInput,page,limit);
+	}
 
 	
 	

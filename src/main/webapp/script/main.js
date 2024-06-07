@@ -54,15 +54,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  function handleSearchButtonClick(event) {
-    const searchTerm = document.getElementById("search-input").value;
-    // 검색에 대한 동작 구현
-    // 예: 검색어를 가지고 필터링하여 해당하는 결과를 표시하는 등의 동작
-    event.stopPropagation();
-  }
-
-
-
   // 팝업창이 화면을 벗어나지 않도록 설정
   function handleWindowResize() {
     const rect = popup.getBoundingClientRect();
@@ -115,30 +106,46 @@ document.addEventListener("DOMContentLoaded", function() {
 	return confirm("정말로 이 게시물을 삭제하겠습니까?");
    
  }
- 
- function search(){
-	var searchInput = document.getElementById("search-input").value.trim();
-	var searchArray = searchInput.split(",");//,를 기준으로 split함수를 사용하면 배열로 반환해준다 
-	
-	for(var i =0; i<searchArray.length;i++){
-		var searchTerm = searchArray[i].trim();
-		
-		if(searchTerm.startsWith("#")){
-			//해시태그인 경우 #을 제거하고 서버로 전송
-			searchTerm = searchTerm.substring(1).trim
-		}
-		
-		searchArray[i] = searchTerm;
-	}
-	//쉼표로 구분된 검색어를 다시 합쳐서 input 요소에 설정
-	
-	document.getElementById("search-input").value = searchArray.join(",");
-	
-	return true;
-	
-	
- 
- }
+
+
+function search() {
+    var searchInput = document.getElementById("searchInput").value.trim();
+
+    var searchArray = searchInput.split(","); // 쉼표를 기준으로 검색어를 분리
+
+    for (var i = 0; i < searchArray.length; i++) {
+        var searchTerm = searchArray[i].trim();
+
+        if (searchTerm.startsWith("#")) {
+            // 해시태그인 경우 #을 제거
+            searchTerm = searchTerm.substring(1).trim();
+        }
+    }
+
+    // 검색어를 쉼표로 구분하여 다시 합침
+    document.getElementById("searchInput").value = searchArray.join(",");
+
+    // Ajax를 사용하여 서버에 검색 요청을 보냄
+    $.ajax({
+        url: "/community_board", // 검색을 처리하는 컨트롤러의 URL
+        method: "GET", // GET 방식으로 변경
+        data: { searchInput: searchArray.join(",") }, // 검색어를 서버에 전달
+        success: function(data) {
+            // 검색 결과를 표시할 영역에 서버로부터 받은 HTML을 추가
+            // 예시로는 id가 'search-results'인 영역에 검색 결과를 표시하도록 가정
+            $("#search-results").html(data);
+        },
+        error: function(xhr, status, error) {
+            // 검색 요청 실패 시 에러 메시지 출력
+            console.error("검색 요청 실패:", status, error);
+        }
+    });
+
+    // 검색 결과를 받기 위해 페이지를 새로고침하지 않음
+    return false;
+}
+
+
 
 
 

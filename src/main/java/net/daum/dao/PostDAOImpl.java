@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -97,12 +98,11 @@ public class PostDAOImpl implements PostDAO {
 
 
 	@Override
-	public List<Community_boardVO> searchPosts(String searchInput) {
-		System.out.println(" \n 게시물 검색");
-		
-		
-		return this.postRepo.searchPosts(searchInput);
-		
+	public Page<Community_boardVO> searchPosts(String searchInput, int page, int limit) {
+		System.out.println(" \n 페이징 된 게시물 검색");
+		String searchkeyword ="%"+searchInput+"%";
+		Pageable pageable = PageRequest.of(page, limit);
+		return this.postRepo.searchPosts(searchkeyword,pageable);
 	}
 
 

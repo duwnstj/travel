@@ -96,7 +96,7 @@ public class PostmakeController {
 	}
 
 	
-	 // 게시물 목록 조회,페이징
+	 // 게시물 목록 조회,페이징 검색 전, 검색 후 
 	 
 	 @RequestMapping(value="/community_board",method=RequestMethod.GET) 
 	 public ModelAndView community_board(HttpServletRequest request) throws Exception{
@@ -105,22 +105,26 @@ public class PostmakeController {
 		 int limit = 7; //현재페이지에 보여지는 목록개수 ,한페이지에 7개 목록이 보여지는 페이징
 		 
 		 if(request.getParameter("page") != null) {
-			 page=Integer.parseInt(request.getParameter("page"));
+			 page=Integer.parseInt(request.getParameter("page"))-1;
+		 }
+		 Page<Community_boardVO> postPage;
+		 String searchInput = request.getParameter("searchInput");
+		 
+		 if(searchInput != null && !searchInput.trim().isEmpty()) {
+			 
+			 //검색어가 있는 경우
+			 postPage = postService.searchPosts(searchInput,page,limit);
+			 
+		 }else {
+			 //검색어가 없는 경우
+			 Pageable pageable =PageRequest.of(page, limit);
+			 postPage = postService.getAllPosts(pageable);
 		 }
 		 
-		 //페이지 정보를 기반으로 Pageable 객체 생성
-		 Pageable pageable = PageRequest.of(page -1,limit);//jpa의 페이지는 0부터 시작
-		  
-		 //페이징 된 게시물 요소 가져오기
-		 Page<Community_boardVO> postPage = postService.getAllPosts(pageable);
-		 
-		
-		
-	  
 	  ModelAndView po = new ModelAndView();
 	  po.addObject("posts",postPage.getContent());
 	  po.addObject("totalPages",postPage.getTotalPages());
-	  po.addObject("currentPage",page);
+	  po.addObject("currentPage",page+1);
 	  po.setViewName("/jsp/main");
 	  
 	  return po;
@@ -241,20 +245,6 @@ public class PostmakeController {
 		      return null;
 		  }
 		  
-		  //검색기능(해시태그는 여러가지 담길 수 있고 ,를 통해 구분한다)
-		  @PostMapping("search_Ok")
-		  public ModelAndView search_ok(@RequestParam("searchInput") String searchInput,
-				  ModelAndView a) {
-			  
-			  List<Community_boardVO> searchResults = postService.searchPosts(searchInput);
-			  
-			  
-			  a.addObject("searchResults",searchResults);
-			  a.setViewName("redirect:/community_board");
-			
-			  
-			  
-			  return a;
-		  }
+		 
 }
 

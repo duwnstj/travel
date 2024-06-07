@@ -8,11 +8,15 @@
 
 <div class="post-container">
 	<div class="search-container">
-		<form method="post" action="search_Ok" onsubmit="return search();" >
+		<form method="get" action="community_board" onsubmit="return search();" >
 		<input type="text" placeholder="제목,내용,#해시태그로 검색해보세요..."
-			id="search-input" >
+			name="searchInput" id="searchInput" >
 		<!-- 사용자 폰트 및 텍스트 색상 적용 -->
 		<button type="submit" name="mt_hashtag" id="mt_hashtag" class="user-background-color">검색</button>
+	
+		
+		
+		
 		<!-- 사용자 배경색 적용 -->
 		</form>
 	</div>
@@ -54,7 +58,7 @@
 					</form>
 			</div>
 			
-
+			
 			<p class="user-title">제목:${p.mate_title}</p>
 			<p class="user-cont">내용:${p.mate_cont}</p>
 			<div class="image-grid">
@@ -68,8 +72,9 @@
 			<div class="interactions">
 				<button class="like-button" name="like" id="like"
 					onclick="post_like">좋아요</button>
-				<button class="comment-button">댓글</button>
+				<button class="comment-button">댓글</button>	
 			</div>
+			<p class="hashtag">해시태그:${p.mt_hashtag}"</p>
 			<p class="user-updatedate">업데이트날짜:${p.updatedate}</p>
 		</div>
 		
@@ -79,13 +84,13 @@
 
 <div class="pagination">
     <c:if test="${currentPage > 1}">
-        <a href="community_board?page=${currentPage - 1}">&laquo; 이전</a>
+        <a href="community_board?page=${currentPage - 1}&searchInput=${param.searchInput}">&laquo; 이전</a>
     </c:if>
     <c:forEach var="i" begin="1" end="${totalPages}">
-        <a href="community_board?page=${i}" class="${currentPage == i ? 'active': ''}">${i}</a>
+        <a href="community_board?page=${i}&searchInput=${param.searchInput}" class="${currentPage == i ? 'active': ''}">${i}</a>
     </c:forEach>
     <c:if test="${currentPage < totalPages}">
-        <a href="community_board?page=${currentPage + 1}">다음 &raquo;</a>
+        <a href="community_board?page=${currentPage + 1}&searchInput=${param.searchInput}">다음 &raquo;</a>
     </c:if>
 </div>
 

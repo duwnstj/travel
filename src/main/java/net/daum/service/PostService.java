@@ -27,32 +27,7 @@ public interface PostService {
 	void editImages(Long mateno, List<String> fileDBNames);
 
 	void delpost(Long mateno);
-
-	List<Community_boardVO> searchPosts(String searchInput);
-
 	
 
-	
-
-
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-
-	
-
+	Page<Community_boardVO> searchPosts(String searchInput, int page, int limit);
 }
