@@ -7,19 +7,18 @@
 <h2 class="user-font">함께 여행을 떠나는 친구를 찾는 공간</h2>
 
 <div class="post-container">
-	<div class="search-container">
-		<form method="get" action="community_board" onsubmit="return search();" >
-		<input type="text" placeholder="제목,내용,#해시태그로 검색해보세요..."
-			name="searchInput" id="searchInput" >
-		<!-- 사용자 폰트 및 텍스트 색상 적용 -->
-		<button type="submit" name="mt_hashtag" id="mt_hashtag" class="user-background-color">검색</button>
-	
-		
-		
-		
-		<!-- 사용자 배경색 적용 -->
-		</form>
-	</div>
+    <div class="search-container">
+        <form method="get" action="community_board" onsubmit="return search();" >
+            <select id="searchType" name="searchType">
+                <option value="" ${searchType==null || searchType==''? 'selected' : ''}>전체</option>
+                <option value="title" ${searchType=='title' ? 'selected' : ''}>제목</option>
+                <option value="content" ${searchType=='content' ? 'selected' : ''}>내용</option>
+            </select>
+            <input type="text" placeholder="제목,내용,#해시태그로 검색해보세요..."
+                   name="searchInput" id="searchInput" value="${searchInput}">
+            <button type="submit" class="user-background-color">검색</button>
+        </form>
+    </div>
 </div>
 
 <div class="sidebar">
@@ -28,12 +27,13 @@
 		<!-- 게시물 만들기 버튼에 텍스트 색상 적용 -->
 		<li><a onclick="location='Talk';">톡(TALK)</a></li>
 		<!-- 톡(TALK) 버튼에 텍스트 색상 적용 -->
-		<!-- 필요한 만큼 카테고리를 추가할 수 있습니다. -->
+		
 	</ul>
 </div>
 
 
 <!-- 인스타그램 스타일의 게시물 폼 추가 -->
+<div id="search-results">
 	<c:forEach var="p" items="${posts}">
 	<div class="instagram-post">
 	
@@ -81,16 +81,24 @@
 	
 </div>
 </c:forEach>
+</div>
 
 <div class="pagination">
     <c:if test="${currentPage > 1}">
-        <a href="community_board?page=${currentPage - 1}&searchInput=${param.searchInput}">&laquo; 이전</a>
+        <a href="community_board?page=${currentPage - 1}&searchInput=${searchInput}&searchType=${searchType}">&laquo; 이전</a>
     </c:if>
     <c:forEach var="i" begin="1" end="${totalPages}">
-        <a href="community_board?page=${i}&searchInput=${param.searchInput}" class="${currentPage == i ? 'active': ''}">${i}</a>
+        <c:choose>
+            <c:when test="${currentPage == i}">
+                <a href="community_board?page=${i}&searchInput=${searchInput}&searchType=${searchType}" class="active">${i}</a>
+            </c:when>
+            <c:otherwise>
+                <a href="community_board?page=${i}&searchInput=${searchInput}&searchType=${searchType}">${i}</a>
+            </c:otherwise>
+        </c:choose>
     </c:forEach>
     <c:if test="${currentPage < totalPages}">
-        <a href="community_board?page=${currentPage + 1}&searchInput=${param.searchInput}">다음 &raquo;</a>
+        <a href="community_board?page=${currentPage + 1}&searchInput=${searchInput}&searchType=${searchType}">다음 &raquo;</a>
     </c:if>
 </div>
 

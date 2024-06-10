@@ -10,15 +10,13 @@ import net.daum.vo.Community_boardVO;
 
 public interface PostRepository extends JpaRepository<Community_boardVO, Long> {
 
-	// 게시물 페이징 조회
-	@Query(value = "SELECT * FROM (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM community_board ORDER BY mateno DESC) a WHERE ROWNUM <= :#{#pageable.offset + #pageable.pageSize}) WHERE rnum > :#{#pageable.offset}", countQuery = "SELECT COUNT(*) FROM community_board", nativeQuery = true)
-	Page<Community_boardVO> getAllPosts(Pageable pageable);
-
-	@Query(value = "SELECT COUNT(*) FROM community_board WHERE mate_title LIKE CONCAT('%', :searchkeyword, '%') OR mate_cont LIKE CONCAT('%', :searchkeyword, '%') OR mt_hashtag LIKE CONCAT('%', :searchkeyword, '%')", nativeQuery = true)
-	Page<Community_boardVO> searchPosts(@Param("searchkeyword") String searchkeyword, Pageable pageable);
-		
-	
-
+	// 전체 게시물 조회
+	  @Query(value = "SELECT * FROM (SELECT a.*, ROWNUM rnum FROM community_board a WHERE ROWNUM <= :#{#pageable.offset + #pageable.pageSize}) WHERE rnum > :#{#pageable.offset}",
+	           countQuery = "SELECT COUNT(*) FROM community_board",
+	           nativeQuery = true)
+	    Page<Community_boardVO> getAllPosts(Pageable pageable);
+	    
+	 
 	// 게시물 번호 조회
 	@Query("select max(c.mateno) from Community_boardVO c ")
 	public Long getMaxMateNo();
@@ -26,10 +24,34 @@ public interface PostRepository extends JpaRepository<Community_boardVO, Long> {
 	// 게시물 이미지 조회
 	@Query("select p from Community_boardVO p WHERE p.mateno = :mateno")
 	public Community_boardVO getPostInfo(@Param("mateno") Long mateno);
+	
+
+	    // 전체 검색
+	    @Query(value = "SELECT * FROM (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM community_board WHERE mate_title LIKE %:searchInput% OR mate_cont LIKE %:searchInput% OR mt_hashtag LIKE %:searchInput% ORDER BY mateno DESC) a WHERE ROWNUM <= :#{#pageable.offset + #pageable.pageSize}) WHERE rnum > :#{#pageable.offset}", 
+	           countQuery = "SELECT COUNT(*) FROM community_board WHERE mate_title LIKE %:searchInput% OR mate_cont LIKE %:searchInput% OR mt_hashtag LIKE %:searchInput%", 
+	           nativeQuery = true)
+	    Page<Community_boardVO> searchPosts(@Param("searchInput") String searchInput, Pageable pageable);
+
+	    // 제목 검색
+	    @Query(value = "SELECT * FROM (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM community_board WHERE mate_title LIKE %:searchInput% ORDER BY mateno DESC) a WHERE ROWNUM <= :#{#pageable.offset + #pageable.pageSize}) WHERE rnum > :#{#pageable.offset}", 
+	           countQuery = "SELECT COUNT(*) FROM community_board WHERE mate_title LIKE %:searchInput%", 
+	           nativeQuery = true)
+	    Page<Community_boardVO> searchPostsByTitle(@Param("searchInput") String searchInput, Pageable pageable);
+
+	    // 내용 검색
+	    @Query(value = "SELECT * FROM (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM community_board WHERE mate_cont LIKE %:searchInput% ORDER BY mateno DESC) a WHERE ROWNUM <= :#{#pageable.offset + #pageable.pageSize}) WHERE rnum > :#{#pageable.offset}", 
+	           countQuery = "SELECT COUNT(*) FROM community_board WHERE mate_cont LIKE %:searchInput%", 
+	           nativeQuery = true)
+	    Page<Community_boardVO> searchPostsByContent(@Param("searchInput") String searchInput, Pageable pageable);
+	}
+
 
 	
 
 	
 
 	
-}
+
+	
+
+	

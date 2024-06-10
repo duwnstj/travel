@@ -31,7 +31,13 @@ public interface PostDAO {
 	void delpost(Long mateno);
 
 
-	Page<Community_boardVO> searchPosts(String searchInput, int page, int limit);
+	
+
+	Page<Community_boardVO> searchPosts(String searchInput, Pageable pageable);
+
+	Page<Community_boardVO> searchPostsByTitle(String searchInput, Pageable pageable);
+
+	Page<Community_boardVO> searchPostsByContent(String searchInput, Pageable pageable);
 
 
 

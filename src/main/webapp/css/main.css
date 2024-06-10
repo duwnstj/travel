@@ -30,6 +30,9 @@ h2 {
   text-align: center;
   padding: 10px;
   width:800px;
+  
+  
+  margin:20px auto;
 }
 
 #searchInput {
@@ -41,6 +44,34 @@ h2 {
   border-radius: 20px;
   font-size: 16px;
 }
+/* 버튼 기본 스타일 */
+button.user-background-color {
+    background-color: #4174d9; 
+    border: none; /* 테두리 없음 */
+    color: white; /* 흰색 글자 */
+    padding: 10px 20px; /* 여백 */
+    text-align: center; /* 텍스트 정렬 */
+    text-decoration: none; /* 텍스트 장식 없음 */
+    display: inline-block; /* 인라인 블록 */
+    font-size: 16px; /* 글자 크기 */
+    margin: 4px 2px; /* 여백 */
+    cursor: pointer; /* 커서 포인터 */
+    border-radius: 12px; /* 둥근 테두리 */
+    transition: background-color 0.3s ease; /* 배경색 전환 */
+}
+
+/* 버튼 호버 효과 */
+button.user-background-color:hover {
+    background-color: #3366cc; 
+}
+
+/* 검색 폼 내의 검색 버튼 */
+.search-container button.user-background-color {
+    width: 80px; /* 버튼 너비 */
+    height: 32px; /* 버튼 높이 */
+    font-size: 15px; /* 글자 크기 */
+}
+
 
 #mt_hashtag {
   padding: 8px 16px;

@@ -98,37 +98,46 @@ public class PostmakeController {
 	
 	 // 게시물 목록 조회,페이징 검색 전, 검색 후 
 	 
-	 @RequestMapping(value="/community_board",method=RequestMethod.GET) 
-	 public ModelAndView community_board(HttpServletRequest request) throws Exception{
+	@RequestMapping(value="/community_board", method=RequestMethod.GET) 
+	public ModelAndView community_board(
+	    @RequestParam(defaultValue = "1") int page,
+	    @RequestParam(required=false) String searchInput,
+	    @RequestParam(required=false) String searchType) throws Exception {
 	  
-		 int page =1; //현재 쪽번호
-		 int limit = 7; //현재페이지에 보여지는 목록개수 ,한페이지에 7개 목록이 보여지는 페이징
-		 
-		 if(request.getParameter("page") != null) {
-			 page=Integer.parseInt(request.getParameter("page"))-1;
-		 }
-		 Page<Community_boardVO> postPage;
-		 String searchInput = request.getParameter("searchInput");
-		 
-		 if(searchInput != null && !searchInput.trim().isEmpty()) {
-			 
-			 //검색어가 있는 경우
-			 postPage = postService.searchPosts(searchInput,page,limit);
-			 
-		 }else {
-			 //검색어가 없는 경우
-			 Pageable pageable =PageRequest.of(page, limit);
-			 postPage = postService.getAllPosts(pageable);
-		 }
-		 
-	  ModelAndView po = new ModelAndView();
-	  po.addObject("posts",postPage.getContent());
-	  po.addObject("totalPages",postPage.getTotalPages());
-	  po.addObject("currentPage",page+1);
-	  po.setViewName("/jsp/main");
+	    int limit = 7; // Items per page
+	    
+	    Page<Community_boardVO> postPage;
+	    
+	    if (searchInput != null && !searchInput.trim().isEmpty()) {
+	        Pageable pageable = PageRequest.of(page - 1, limit);
+	        
+	        if ("title".equals(searchType)) {
+	            // Search by title
+	            postPage = postService.searchPostsByTitle(searchInput, pageable);
+	        } else if ("content".equals(searchType)) {
+	            // Search by content
+	            postPage = postService.searchPostsByContent(searchInput, pageable);
+	        } else {
+	            // Default search
+	            postPage = postService.searchPosts(searchInput, pageable);
+	        }
+	    } else {
+	        // No search input
+	        Pageable pageable = PageRequest.of(page - 1, limit);
+	        postPage = postService.getAllPosts(pageable);
+	    } 
+	    
+	    ModelAndView po = new ModelAndView();
+	    po.addObject("posts", postPage.getContent());
+	    po.addObject("totalPages", postPage.getTotalPages());
+	    po.addObject("currentPage", page);
+	    po.addObject("searchInput",searchInput);
+	    po.addObject("searchType",searchType);
+	    po.setViewName("/jsp/main");
 	  
-	  return po;
-	 }
+	    return po;
+	}
+
 	  
 	 //게시물 수정폼으로 이동
 	 @PostMapping("/post_edit")

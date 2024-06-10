@@ -96,14 +96,27 @@ public class PostDAOImpl implements PostDAO {
 		
 	}
 
+	@Override
+	public Page<Community_boardVO> searchPosts(String searchInput, Pageable pageable) {
+		System.out.println(" \n 전체 검색");
+		return postRepo.searchPosts("%"+searchInput+"%", pageable);
+	}
+
 
 	@Override
-	public Page<Community_boardVO> searchPosts(String searchInput, int page, int limit) {
-		System.out.println(" \n 페이징 된 게시물 검색");
-		String searchkeyword ="%"+searchInput+"%";
-		Pageable pageable = PageRequest.of(page, limit);
-		return this.postRepo.searchPosts(searchkeyword,pageable);
+	public Page<Community_boardVO> searchPostsByTitle(String searchInput, Pageable pageable) {
+		System.out.println(" \n 제목으로 검색");
+		return postRepo.searchPostsByTitle(searchInput, pageable);
 	}
+
+
+	@Override
+	public Page<Community_boardVO> searchPostsByContent(String searchInput, Pageable pageable) {
+		System.out.println(" \n 글내용으로 검색");
+		return postRepo.searchPostsByContent(searchInput,pageable);
+	}
+	
+	
 
 
 	

@@ -65,10 +65,22 @@ public class PostServiceImpl implements PostService {
 		
 	}
 
+	
 	@Override
-	public Page<Community_boardVO> searchPosts(String searchInput, int page, int limit) {
+	public Page<Community_boardVO> searchPosts(String searchInput, Pageable pageable) {
 		
-		return this.postDao.searchPosts(searchInput,page,limit);
+		return this.postDao.searchPosts(searchInput,pageable);
+	}
+
+	@Override
+	public Page<Community_boardVO> searchPostsByTitle(String searchInput, Pageable pageable) {
+		return this.postDao.searchPostsByTitle(searchInput,pageable);
+	}
+
+	@Override
+	public Page<Community_boardVO> searchPostsByContent(String searchInput, Pageable pageable) {
+		
+		return this.postDao.searchPostsByContent(searchInput,pageable);
 	}
 
 	

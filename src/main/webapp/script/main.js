@@ -110,40 +110,47 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function search() {
     var searchInput = document.getElementById("searchInput").value.trim();
+    var searchType = document.getElementById("searchType").value; // Ensure searchType is correctly fetched
 
-    var searchArray = searchInput.split(","); // 쉼표를 기준으로 검색어를 분리
+    var searchArray = searchInput.split(","); // Split by comma
 
     for (var i = 0; i < searchArray.length; i++) {
         var searchTerm = searchArray[i].trim();
 
         if (searchTerm.startsWith("#")) {
-            // 해시태그인 경우 #을 제거
+            // Remove hashtag
             searchTerm = searchTerm.substring(1).trim();
         }
+        searchArray[i] = searchTerm;
     }
 
-    // 검색어를 쉼표로 구분하여 다시 합침
+    // Join search terms back with commas
     document.getElementById("searchInput").value = searchArray.join(",");
 
-    // Ajax를 사용하여 서버에 검색 요청을 보냄
     $.ajax({
-        url: "/community_board", // 검색을 처리하는 컨트롤러의 URL
-        method: "GET", // GET 방식으로 변경
-        data: { searchInput: searchArray.join(",") }, // 검색어를 서버에 전달
+        url: "/community_board", // Controller URL
+        method: "GET", // GET method
+        data: { 
+            searchInput: searchArray.join(","),
+            searchType: searchType // Include searchType
+        },
         success: function(data) {
-            // 검색 결과를 표시할 영역에 서버로부터 받은 HTML을 추가
-            // 예시로는 id가 'search-results'인 영역에 검색 결과를 표시하도록 가정
-            $("#search-results").html(data);
+            // Update search results
+            var searchResultsHtml = $(data).find("#search-results").html();
+            $("#search-results").html(searchResultsHtml);
+
+            // Update pagination
+            var paginationHtml = $(data).find(".pagination").html();
+            $(".pagination").html(paginationHtml);
         },
         error: function(xhr, status, error) {
-            // 검색 요청 실패 시 에러 메시지 출력
-            console.error("검색 요청 실패:", status, error);
+            console.error("Search request failed:", status, error);
         }
     });
 
-    // 검색 결과를 받기 위해 페이지를 새로고침하지 않음
-    return false;
+    return false; // Prevent form submission
 }
+
 
 
 
