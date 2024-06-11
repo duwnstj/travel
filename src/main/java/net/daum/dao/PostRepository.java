@@ -9,13 +9,12 @@ import org.springframework.data.repository.query.Param;
 import net.daum.vo.Community_boardVO;
 
 public interface PostRepository extends JpaRepository<Community_boardVO, Long> {
-
 	// 전체 게시물 조회
-	  @Query(value = "SELECT * FROM (SELECT a.*, ROWNUM rnum FROM community_board a WHERE ROWNUM <= :#{#pageable.offset + #pageable.pageSize}) WHERE rnum > :#{#pageable.offset}",
-	           countQuery = "SELECT COUNT(*) FROM community_board",
-	           nativeQuery = true)
-	    Page<Community_boardVO> getAllPosts(Pageable pageable);
-	    
+	@Query(value = "SELECT * FROM (SELECT a.*, ROWNUM rnum FROM community_board a ORDER BY mateno DESC) WHERE ROWNUM <= :#{#pageable.offset + #pageable.pageSize} AND rnum > :#{#pageable.offset}",
+	       countQuery = "SELECT COUNT(*) FROM community_board",
+	       nativeQuery = true)
+	Page<Community_boardVO> getAllPosts(Pageable pageable);
+ 
 	 
 	// 게시물 번호 조회
 	@Query("select max(c.mateno) from Community_boardVO c ")

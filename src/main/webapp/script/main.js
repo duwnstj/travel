@@ -1,70 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const acceptedPeople = ["User1", "User2", "User3"];
-
-  // 수락한 인원 동적 추가
-  const acceptedList = document.getElementById("acceptedList");
-  acceptedPeople.forEach(person => {
-    const listItem = document.createElement("li");
-    listItem.textContent = person;
-    acceptedList.appendChild(listItem);
-  });
-
-  const popup = document.getElementById("popup");
-  let isDragging = false;
-  let startX, startY, popupStartX, popupStartY;
-
-  function handleDragStart(event) {
-    isDragging = true;
-    const rect = popup.getBoundingClientRect();
-    startX = event.clientX;
-    startY = event.clientY;
-    popupStartX = rect.left;
-    popupStartY = rect.top;
-    event.preventDefault(); // 기본 동작 막기
-    event.stopPropagation();
-  }
-  function handleDragEnd(event) {
-  isDragging = false;
-  document.body.style.cursor = 'default';
-}
-
-  function handleMouseMove(event) {
-    if (isDragging) {
-      const offsetX = event.clientX - startX;
-      const offsetY = event.clientY - startY;
-
-      // 팝업의 새 위치 계산
-      let newPopupX = popupStartX + offsetX;
-      let newPopupY = popupStartY + offsetY;
-
-      // 문서 경계를 넘어가지 않도록 보정
-      const maxX = window.innerWidth - popup.offsetWidth;
-      const maxY = window.innerHeight - popup.offsetHeight;
-      newPopupX = Math.max(0, Math.min(newPopupX, maxX));
-      newPopupY = Math.max(0, Math.min(newPopupY, maxY));
-
-      popup.style.transition = 'none'; // 드래그 중에는 transition 제거
-      popup.style.left = newPopupX + 'px';
-      popup.style.top = newPopupY + 'px';
-
-      // 드래그 중에는 커서 위치를 따라가도록 설정
-      document.body.style.cursor = 'move';
-
-      event.stopPropagation();
-    }
-  }
-
-  // 팝업창이 화면을 벗어나지 않도록 설정
-  function handleWindowResize() {
-    const rect = popup.getBoundingClientRect();
-    const maxX = window.innerWidth - rect.width;
-    const maxY = window.innerHeight - rect.height;
-    popup.style.left = Math.max(0, Math.min(rect.left, maxX)) + 'px';
-    popup.style.top = Math.max(0, Math.min(rect.top, maxY)) + 'px';
-  }
-
-  window.addEventListener('resize', handleWindowResize);
-});
 
 document.addEventListener("DOMContentLoaded", function() {
     var toggleButtons = document.querySelectorAll('.toggle-button');
@@ -108,19 +41,18 @@ document.addEventListener("DOMContentLoaded", function() {
  }
 
 
-function search() {
-    var searchInput = document.getElementById("searchInput").value.trim();
-    var searchType = document.getElementById("searchType").value; // Ensure searchType is correctly fetched
-
-    var searchArray = searchInput.split(","); // Split by comma
+function search(searchInput, searchType) {
+    var searchArray = searchInput.split(",");
 
     for (var i = 0; i < searchArray.length; i++) {
         var searchTerm = searchArray[i].trim();
 
         if (searchTerm.startsWith("#")) {
-            // Remove hashtag
+            // #로 시작하는 경우, 해시태그이므로 # 제거
             searchTerm = searchTerm.substring(1).trim();
+          
         }
+
         searchArray[i] = searchTerm;
     }
 
@@ -152,7 +84,13 @@ function search() {
 }
 
 
+    // 해시태그 클릭 이벤트 처리
+    $('.hashtag-item').on('click', function(){
+        var hashtagText = $(this).text(); // 클릭된 해시태그의 텍스트 가져오기
+        var searchInput = hashtagText; // 검색어로 사용
+        var searchType = ""; // 검색 타입은 전체로 설정
 
-
+        search(searchInput, searchType); // 검색 함수 호출
+    });
 
 

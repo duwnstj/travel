@@ -25,10 +25,10 @@
 		<!-- 파일 첨부 기능을 위한 input 기능 -->
 		<input type="file" multiple name="uploadFile"
 		
-		id="uploadFile" accept="image/*">
+		id="uploadFile"  accept="image/*">
 		
 		
-		<input type="text" name="mt_hashtag" id="mt_hashtag" placeholder="태그를 입력하세요... (쉼표로 구분)">
+		<input type="text" name="mt_hashtag" id="mt_hashtag" value="${mt_hashtag}" placeholder="태그를 입력하세요... (쉼표로 구분)">
 		
      
     

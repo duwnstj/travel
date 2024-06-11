@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="../include/header.jsp" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 
 <link rel="stylesheet" href="../css/main.css">
 
@@ -8,7 +10,7 @@
 
 <div class="post-container">
     <div class="search-container">
-        <form method="get" action="community_board" onsubmit="return search();" >
+        <form id="searchForm" method="get" action="community_board" onsubmit="return search();" >
             <select id="searchType" name="searchType">
                 <option value="" ${searchType==null || searchType==''? 'selected' : ''}>전체</option>
                 <option value="title" ${searchType=='title' ? 'selected' : ''}>제목</option>
@@ -20,6 +22,15 @@
         </form>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        // Form 제출 시 해시태그 제거
+        $("#searchForm").submit(function(event) {
+            var searchInput = $("#searchInput").val().replace(/#/g, "");
+            $("#searchInput").val(searchInput);
+        });
+    });
+</script>
 
 <div class="sidebar">
 	<ul>
@@ -74,7 +85,11 @@
 					onclick="post_like">좋아요</button>
 				<button class="comment-button">댓글</button>	
 			</div>
-			<p class="hashtag">해시태그:${p.mt_hashtag}"</p>
+			<p class="hashtag">
+    <c:forEach var="hashtag" items="${p.mt_hashtag.split(',')}">
+        <span class="hashtag-item">#${hashtag.trim()}</span>
+    </c:forEach>
+</p>
 			<p class="user-updatedate">업데이트날짜:${p.updatedate}</p>
 		</div>
 		

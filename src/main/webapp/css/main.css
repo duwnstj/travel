@@ -26,50 +26,72 @@ h2 {
   align-items:center;
 }
 
+
+/* 게시물 검색창 스타일 */
 .search-container {
-  text-align: center;
-  padding: 10px;
+  display: flex; /* 내부 요소들을 가로로 나열합니다. */
+  align-items: center; /* 내부 요소들을 세로 중앙 정렬합니다. */
+  justify-content: center; /* 내부 요소들을 가로 중앙 정렬합니다. */
+  margin-bottom: 20px;
   width:800px;
-  
-  
-  margin:20px auto;
 }
 
 #searchInput {
-  width: calc(100% - 100px);
+  flex: 1; /* 검색 입력창이 최대한 확장되도록 설정합니다. */
   height: 40px;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 16px;
+}
+
+#searchInput::placeholder {
+  color: #999;
+}
+
+#searchInput:focus {
+  background: rgba(255, 255, 255, 1); /* 포커스 시 흰색 배경으로 변경 */
+  outline: none; /* 포커스 시 아웃라인 제거 */
+}
+
+#searchType {
+  height: 40px;
+  padding: 10px;
+  margin-right: 10px;
   border: 1px solid #ddd;
   border-radius: 20px;
   font-size: 16px;
 }
 /* 버튼 기본 스타일 */
+
 button.user-background-color {
-    background-color: #4174d9; 
-    border: none; /* 테두리 없음 */
-    color: white; /* 흰색 글자 */
-    padding: 10px 20px; /* 여백 */
-    text-align: center; /* 텍스트 정렬 */
-    text-decoration: none; /* 텍스트 장식 없음 */
-    display: inline-block; /* 인라인 블록 */
-    font-size: 16px; /* 글자 크기 */
-    margin: 4px 2px; /* 여백 */
-    cursor: pointer; /* 커서 포인터 */
-    border-radius: 12px; /* 둥근 테두리 */
-    transition: background-color 0.3s ease; /* 배경색 전환 */
+  height: 40px;
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.3s;
+  background-color: #4174d9; /* 기본 색상 */
 }
 
-/* 버튼 호버 효과 */
 button.user-background-color:hover {
-    background-color: #3366cc; 
+  background-color: #375bb0; /* 호버된 색상 */
 }
+button.user-background-color:focus {
+  outline: none; /* 포커스 시 아웃라인 제거 */
+}
+
+
 
 /* 검색 폼 내의 검색 버튼 */
 .search-container button.user-background-color {
-    width: 80px; /* 버튼 너비 */
+    width: 65px; /* 버튼 너비 */
     height: 32px; /* 버튼 높이 */
-    font-size: 15px; /* 글자 크기 */
+    font-size: 12px; /* 글자 크기 */
+    text-align:center;
 }
 
 

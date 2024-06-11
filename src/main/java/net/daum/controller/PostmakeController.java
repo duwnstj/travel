@@ -103,6 +103,8 @@ public class PostmakeController {
 	    @RequestParam(defaultValue = "1") int page,
 	    @RequestParam(required=false) String searchInput,
 	    @RequestParam(required=false) String searchType) throws Exception {
+		
+		System.out.println(searchInput);
 	  
 	    int limit = 7; // Items per page
 	    
@@ -149,8 +151,7 @@ public class PostmakeController {
 		 	am.addObject("postId",post.getMateno());
 		 	am.addObject("mate_title", post.getMate_title());
 		 	am.addObject("mate_cont",post.getMate_cont());
-		 	am.addObject("mate_image",post.getImages());//이미지 리스트 추가
-		  
+		 	am.addObject("mt_hashtag",post.getMt_hashtag());
 			
 			am.setViewName("/jsp/postEdit");
 			
