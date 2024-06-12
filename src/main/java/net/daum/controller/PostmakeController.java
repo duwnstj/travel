@@ -187,6 +187,7 @@ public class PostmakeController {
 					String homedir = uploadFolder + "/" + year + "-" + month + "-" + date;
 					File path01 = new File(homedir);
 
+					
 					if (!(path01.exists())) {// 오늘 날짜 폴더 경로가 존재하지 않으면
 						path01.mkdir();// 오늘 날짜 폴더 생성
 					}

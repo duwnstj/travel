@@ -1,11 +1,7 @@
 package net.daum.vo;
 
-
-
 import java.sql.Timestamp;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -25,31 +22,36 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
+@Getter 
 @Setter
 @ToString
 @Entity
 @SequenceGenerator(// 오라클 시퀀스 생성기
-		name = "mate_noseq_gename", 
-		sequenceName = "mate_no_seq", // 시퀀스 이름
+		name = "comment_noseq_gename", 
+		sequenceName = "comment_no_seq", // 시퀀스 이름
 		initialValue = 1, // 시퀀스 시작값
 		allocationSize = 1
 
 )
-@EqualsAndHashCode(of="mateno")
-@Table(name = "community_board")
-public class Community_boardVO {
+@EqualsAndHashCode(of="commentNo")
+@Table(name ="cm_comment")
 
-	@Id // 기본키
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mate_noseq_gename")
+
+public class Cm_CommentVO {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_noseq_gename")
+	private Long commentNo;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="mateno",nullable=false)
+	private Community_boardVO communityBoard;
 	
-	private Long mateno;// 기본키 게시글 번호
-
-
-	private String mate_title; //제목
+	
+	private String commentWriter;
 	
 	@Column(length=4000)
-	private String mate_cont; // 내용
+	private String commentText;
 	
 	@CreationTimestamp //하이버네이트 기능으로 등록시점 날짜를 기록
 	private Timestamp makedate;//등록 날짜
@@ -57,17 +59,5 @@ public class Community_boardVO {
 	@UpdateTimestamp
 	private Timestamp updatedate;//하이버네이트 기능으로 업데이트 날짜 자동 기록
 	
-	
-	private String mt_hashtag; //해시태그
-	
-	@OneToMany(mappedBy="communityBoard", cascade = CascadeType.ALL)
-	private List<Cm_CommentVO> comments;
-	
-	
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	@JoinColumn(name="mateno2")
-	private List<Cm_ImgVO> images;//외래키로 게시판 이미지 테이블에  게시판의 기본키 참조
-	
-
 
 }

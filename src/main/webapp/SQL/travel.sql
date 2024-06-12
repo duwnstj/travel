@@ -6,11 +6,14 @@ select max(mateno) from community_board;
 
 select * from CM_IMG;
 
-select * from CM_REPL;
-
 select * from member;
 
+select * from cm_comment;
+
 SELECT MAX(mateno) FROM Community_board;
+
+drop table cm_comment;
+
 
 
 insert into MEMBER (member_id) values ('ddd@naver.com');

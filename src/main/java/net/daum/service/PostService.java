@@ -36,4 +36,6 @@ public interface PostService {
 	Page<Community_boardVO> searchPostsByTitle(String searchInput, Pageable pageable);
 
 	Page<Community_boardVO> searchPostsByContent(String searchInput, Pageable pageable);
+
+	
 }
