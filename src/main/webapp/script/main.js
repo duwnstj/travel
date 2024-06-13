@@ -92,5 +92,5 @@ function search(searchInput, searchType) {
 
         search(searchInput, searchType); // 검색 함수 호출
     });
-
+    
 

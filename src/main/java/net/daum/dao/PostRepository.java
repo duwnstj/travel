@@ -1,5 +1,7 @@
 package net.daum.dao;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -42,6 +44,15 @@ public interface PostRepository extends JpaRepository<Community_boardVO, Long> {
 	           countQuery = "SELECT COUNT(*) FROM community_board WHERE mate_cont LIKE %:searchInput%", 
 	           nativeQuery = true)
 	    Page<Community_boardVO> searchPostsByContent(@Param("searchInput") String searchInput, Pageable pageable);
+
+
+		
+
+
+		
+
+
+		
 	}
 
 
