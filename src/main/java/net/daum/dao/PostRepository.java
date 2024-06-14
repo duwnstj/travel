@@ -46,6 +46,9 @@ public interface PostRepository extends JpaRepository<Community_boardVO, Long> {
 	    Page<Community_boardVO> searchPostsByContent(@Param("searchInput") String searchInput, Pageable pageable);
 
 
+	
+
+
 		
 
 

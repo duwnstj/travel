@@ -7,12 +7,15 @@ import org.springframework.stereotype.Service;
 
 import net.daum.dao.CommentDAO;
 import net.daum.vo.Cm_CommentVO;
+import net.daum.vo.Community_boardVO;
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private CommentDAO commentdao;
+
+
 
 
 	

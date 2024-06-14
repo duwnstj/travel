@@ -87,12 +87,12 @@
 			<div class="interactions">
 				<button class="like-button" name="like" id="like"
 					onclick="post_like">좋아요</button>
-				<button class="comment-button" onclick="toggleCommentForm(${p.mateno})">댓글</button>
-			</div>
-			
-
-
-
+                    <!-- 댓글 추가 버튼 -->
+                    <button class="comment-button">댓글</button>
+                    
+          
+       
+    </div>
 
 			<p class="hashtag">
 				<c:forEach var="hashtag" items="${p.mt_hashtag.split(',')}">

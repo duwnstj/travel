@@ -93,4 +93,57 @@ function search(searchInput, searchType) {
         search(searchInput, searchType); // 검색 함수 호출
     });
     
+  $(document).ready(function() {
+    // 댓글 추가 폼 토글
+    $(".comment-button").click(function() {
+        var commentForm = $(this).siblings(".comment-form");
+        commentForm.slideToggle();
+    });
 
+    // 댓글 추가 Ajax 요청
+    $(".comment-form").submit(function(event) {
+        event.preventDefault();
+        var postId = $(this).find("#postId").val();
+        var content = $(this).find("textarea[name='comment-content']").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/community/post/" + postId + "/comment",
+            contentType: "application/json",
+            data: JSON.stringify({ content: content }),
+            success: function(response) {
+                fetchComments(postId); // 댓글 추가 후 목록 다시 불러오기
+            },
+            error: function(e) {
+                console.log("Error:", e);
+            }
+        });
+
+        // 댓글 폼 숨기기
+        $(this).slideUp();
+    });
+
+    // 각 게시물의 댓글 목록 초기 로딩
+    $(".post-container").each(function() {
+        var postId = $(this).find("#postId").val();
+        fetchComments(postId); // 초기 댓글 목록 불러오기
+    });
+
+    // 댓글 목록을 Ajax로 불러와서 화면에 추가하는 함수
+    function fetchComments(postId) {
+        var commentList = $("#commentList-" + postId);
+        $.get("/community/post/" + postId + "/comments", function(comments) {
+            commentList.empty(); // 기존 댓글 초기화
+
+            $.each(comments, function(index, comment) {
+                commentList.append("<li>" + comment.commentWriter + ": " + comment.commentText + "</li>");
+            });
+        });
+    }
+});
+
+ 
+
+  
+    
+  

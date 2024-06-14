@@ -115,7 +115,9 @@ public class PostDAOImpl implements PostDAO {
 		System.out.println(" \n 글내용으로 검색");
 		return postRepo.searchPostsByContent(searchInput,pageable);
 	}
-	
+
+
+
 	
 
 

@@ -39,6 +39,8 @@ public interface PostDAO {
 
 	Page<Community_boardVO> searchPostsByContent(String searchInput, Pageable pageable);
 
+	
+
 
 
 
