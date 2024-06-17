@@ -1,22 +1,18 @@
-
 document.addEventListener("DOMContentLoaded", function() {
     var toggleButtons = document.querySelectorAll('.toggle-button');
     toggleButtons.forEach(function(button) {
         button.addEventListener('click', function(event) {
             var options = this.parentElement.querySelector('.options');
-            // 클릭된 토글 버튼 아래에 옵션 요소를 나타내거나 감춥니다.
             if (options.style.display === "block") {
                 options.style.display = "none";
             } else {
-                // 모든 옵션창 닫기
                 closeAllOptions();
                 options.style.display = "block";
             }
-            event.stopPropagation(); // 옵션 버튼을 클릭했을 때 문서의 다른 부분에 클릭 이벤트가 전달되지 않도록 합니다.
+            event.stopPropagation();
         });
     });
 
-    // 문서의 다른 부분을 클릭했을 때 옵션 팝업을 닫습니다.
     document.addEventListener('click', function(event) {
         var options = document.querySelectorAll('.options');
         options.forEach(function(option) {
@@ -26,124 +22,170 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // 모든 옵션창을 닫습니다.
     function closeAllOptions() {
         var options = document.querySelectorAll('.options');
         options.forEach(function(option) {
             option.style.display = "none";
         });
     }
-});
 
- function del_check(){
-	return confirm("정말로 이 게시물을 삭제하겠습니까?");
-   
- }
-
-
-function search(searchInput, searchType) {
-    var searchArray = searchInput.split(",");
-
-    for (var i = 0; i < searchArray.length; i++) {
-        var searchTerm = searchArray[i].trim();
-
-        if (searchTerm.startsWith("#")) {
-            // #로 시작하는 경우, 해시태그이므로 # 제거
-            searchTerm = searchTerm.substring(1).trim();
-          
-        }
-
-        searchArray[i] = searchTerm;
+    function del_check() {
+        return confirm("정말로 이 게시물을 삭제하겠습니까?");
     }
 
-    // Join search terms back with commas
-    document.getElementById("searchInput").value = searchArray.join(",");
+    function search(searchInput, searchType) {
+        var searchArray = searchInput.split(",");
 
-    $.ajax({
-        url: "/community_board", // Controller URL
-        method: "GET", // GET method
-        data: { 
-            searchInput: searchArray.join(","),
-            searchType: searchType // Include searchType
-        },
-        success: function(data) {
-            // Update search results
-            var searchResultsHtml = $(data).find("#search-results").html();
-            $("#search-results").html(searchResultsHtml);
+        for (var i = 0; i < searchArray.length; i++) {
+            var searchTerm = searchArray[i].trim();
 
-            // Update pagination
-            var paginationHtml = $(data).find(".pagination").html();
-            $(".pagination").html(paginationHtml);
-        },
-        error: function(xhr, status, error) {
-            console.error("Search request failed:", status, error);
+            if (searchTerm.startsWith("#")) {
+                searchTerm = searchTerm.substring(1).trim();
+            }
+
+            searchArray[i] = searchTerm;
         }
-    });
 
-    return false; // Prevent form submission
-}
-
-
-    // 해시태그 클릭 이벤트 처리
-    $('.hashtag-item').on('click', function(){
-        var hashtagText = $(this).text(); // 클릭된 해시태그의 텍스트 가져오기
-        var searchInput = hashtagText; // 검색어로 사용
-        var searchType = ""; // 검색 타입은 전체로 설정
-
-        search(searchInput, searchType); // 검색 함수 호출
-    });
-    
-  $(document).ready(function() {
-    // 댓글 추가 폼 토글
-    $(".comment-button").click(function() {
-        var commentForm = $(this).siblings(".comment-form");
-        commentForm.slideToggle();
-    });
-
-    // 댓글 추가 Ajax 요청
-    $(".comment-form").submit(function(event) {
-        event.preventDefault();
-        var postId = $(this).find("#postId").val();
-        var content = $(this).find("textarea[name='comment-content']").val();
+        document.getElementById("searchInput").value = searchArray.join(",");
 
         $.ajax({
-            type: "POST",
-            url: "/community/post/" + postId + "/comment",
-            contentType: "application/json",
-            data: JSON.stringify({ content: content }),
-            success: function(response) {
-                fetchComments(postId); // 댓글 추가 후 목록 다시 불러오기
+            url: "/community_board",
+            method: "GET",
+            data: {
+                searchInput: searchArray.join(","),
+                searchType: searchType
             },
-            error: function(e) {
-                console.log("Error:", e);
+            success: function(data) {
+                var searchResultsHtml = $(data).find("#search-results").html();
+                $("#search-results").html(searchResultsHtml);
+
+                var paginationHtml = $(data).find(".pagination").html();
+                $(".pagination").html(paginationHtml);
+            },
+            error: function(xhr, status, error) {
+                console.error("Search request failed:", status, error);
             }
         });
 
-        // 댓글 폼 숨기기
-        $(this).slideUp();
+        return false;
+    }
+
+    $('.hashtag-item').on('click', function() {
+        var hashtagText = $(this).text();
+        var searchInput = hashtagText;
+        var searchType = "";
+
+        search(searchInput, searchType);
     });
 
-    // 각 게시물의 댓글 목록 초기 로딩
-    $(".post-container").each(function() {
-        var postId = $(this).find("#postId").val();
-        fetchComments(postId); // 초기 댓글 목록 불러오기
+    $('.comment-button').on('click', function() {
+        var mateno = $(this).data('mateno');
+        var commentSectionId = '#comment-section-' + mateno;
+        $(commentSectionId).toggle();
+        loadComments(mateno);
     });
 
-    // 댓글 목록을 Ajax로 불러와서 화면에 추가하는 함수
-    function fetchComments(postId) {
-        var commentList = $("#commentList-" + postId);
-        $.get("/community/post/" + postId + "/comments", function(comments) {
-            commentList.empty(); // 기존 댓글 초기화
+    $(document).on('submit', '.commentForm', function(event) {
+        event.preventDefault();
+        var mateno = $(this).data('mateno');
+        var commentText = $(this).find('.commentText').val().trim();
 
-            $.each(comments, function(index, comment) {
-                commentList.append("<li>" + comment.commentWriter + ": " + comment.commentText + "</li>");
+        if (commentText !== '') {
+            $.ajax({
+                type: 'POST',
+                url: '/comments/add/' + mateno,
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    commentText: commentText
+                }),
+                success: function(response) {
+                    console.log('댓글이 성공적으로 추가되었습니다.');
+                    loadComments(mateno);
+                    $(this).find('.commentText').val('');
+                }.bind(this),
+                error: function(xhr, status, error) {
+                    console.error('댓글 추가 중 오류가 발생했습니다:', xhr.responseText);
+                }
             });
+        } else {
+            alert('댓글 내용을 입력하세요.');
+        }
+    });
+
+    $(document).on('click', '.edit-comment-button', function() {
+        var commentNo = $(this).data('commentid');
+        var mateno = $(this).data('mateno');
+        var newCommentText = prompt('댓글을 수정하세요:', '');
+
+        if (newCommentText !== null && newCommentText.trim() !== '') {
+            $.ajax({
+                type: 'PUT',
+                url: '/comments/update/' + commentNo,
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    commentText: newCommentText
+                }),
+                success: function(response) {
+                    console.log('댓글이 성공적으로 수정되었습니다.');
+                    loadComments(mateno);
+                },
+                error: function(xhr, status, error) {
+                    console.error('댓글 수정 중 오류가 발생했습니다:', xhr.responseText);
+                }
+            });
+        } else {
+            alert('댓글 내용을 입력하세요.');
+        }
+    });
+
+    $(document).on('click', '.delete-comment-button', function() {
+        var commentNo = $(this).data('commentno');
+        var mateno = $(this).data('mateno');
+
+        if (confirm('이 댓글을 삭제하시겠습니까?')) {
+            $.ajax({
+                url: '/comments/delete/' + commentNo,
+                type: 'DELETE',
+                success: function(response) {
+                    alert('댓글이 삭제되었습니다.');
+                    $('#comment-' + commentNo).remove(); // 해당 댓글만 삭제
+                },
+                error: function(xhr, status, error) {
+                    console.error('댓글 삭제 실패:', error);
+                    alert('댓글 삭제에 실패했습니다.');
+                }
+            });
+        }
+    });
+
+    function loadComments(mateno) {
+        console.log("Loading comments for mateno: " + mateno);
+        $.ajax({
+            type: 'GET',
+            url: '/comments/list/' + mateno,
+            success: function(comments) {
+                var commentSection = $('#comment-list-' + mateno);
+                commentSection.empty();
+
+                if (comments.length > 0) {
+                    $.each(comments, function(index, comment) {
+                        var commentHtml = `
+                            <div class="comment" id="comment-${comment.commentNo}">
+                                <p class="comment-writer">${comment.commentWriter}</p>
+                                <p class="comment-text">${comment.commentText}</p>
+                                <button class="edit-comment-button" data-commentid="${comment.commentNo}" data-mateno="${mateno}">수정</button>
+                                <button class="delete-comment-button" data-commentno="${comment.commentNo}" data-mateno="${mateno}">삭제</button>
+                            </div>
+                        `;
+                        commentSection.append(commentHtml);
+                    });
+                } else {
+                    commentSection.append('<p class="no-comments">댓글이 없습니다.</p>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('댓글 조회 중 오류가 발생했습니다:', xhr.responseText);
+            }
         });
     }
 });
-
- 
-
-  
-    
-  

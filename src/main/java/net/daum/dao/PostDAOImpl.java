@@ -63,11 +63,25 @@ public class PostDAOImpl implements PostDAO {
 	}
 
 
-	@Override
-	public void editBoard(Community_boardVO cb) {
-		System.out.println(" \n 게시글 수정");
-		this.postRepo.save(cb);
-	}
+	  @Override
+	    public void editBoard(Community_boardVO updatedBoard) {
+	        System.out.println(" \n 게시글 수정");
+	        Community_boardVO existingBoard = postRepo.findById(updatedBoard.getMateno())
+	                .orElseThrow(() -> new IllegalArgumentException("Invalid board Id:" + updatedBoard.getMateno()));
+
+	        existingBoard.setMate_title(updatedBoard.getMate_title());
+	        existingBoard.setMate_cont(updatedBoard.getMate_cont());
+	        existingBoard.setMt_hashtag(updatedBoard.getMt_hashtag());
+
+	        // 기존 댓글 목록 유지, 필요 시 추가적인 처리 수행
+	        if (updatedBoard.getComments() != null) {
+	            existingBoard.getComments().clear();
+	            existingBoard.getComments().addAll(updatedBoard.getComments());
+	            updatedBoard.getComments().forEach(comment -> comment.setCommunityBoard(existingBoard));
+	        }
+
+	        postRepo.save(existingBoard);
+	    }
 
 
 	@Override

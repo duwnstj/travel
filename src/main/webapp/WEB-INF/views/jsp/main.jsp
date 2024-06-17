@@ -46,64 +46,58 @@
 
 <!-- 인스타그램 스타일의 게시물 폼 추가 -->
 <div id="search-results">
-	<c:forEach var="p" items="${posts}">
-		<div class="instagram-post">
+    <c:forEach var="p" items="${posts}">
+        <div class="instagram-post">
+            <div class="post-content">
+                <img src="../images/profile.jpg" alt="프로필 사진">
+                <p class="user-id">아이디:</p>
 
-			<div class="post-content">
+                <!-- 수정 및 삭제 토글 버튼 -->
+                <button type="button" class="toggle-button">옵션</button>
+                <!-- 수정 및 삭제 옵션 -->
+                <div class="options" id="options-${p.mateno}">
+                    <form method="post" action="post_edit">
+                        <input type="hidden" name="mateno" value="${p.mateno}">
+                        <button type="submit">게시물 수정하기</button>
+                    </form>
+                    <form method="post" action="post_del_ok" onsubmit="return del_check();">
+                        <input type="hidden" name="mateno" value="${p.mateno}">
+                        <button type="submit">게시물 삭제하기</button>
+                    </form>
+                </div>
 
-				<img src="../images/profile.jpg" alt="프로필 사진">
-				<p class="user-id">아이디:</p>
-
-				<!-- 수정 및 삭제 토글 버튼 -->
-				<button type="button" class="toggle-button">옵션</button>
-				<%--type="button"을 
-			안써주면 button태그자체가 디폴트값이 제출(submit)이라서 바로 제출이된다.  --%>
-
-				<div class="options">
-
-					<form method="post" action="post_edit">
-						<input type="hidden" name="mateno" value="${p.mateno}">
-						<button type="submit">게시물 수정하기</button>
-					</form>
-					<form method="post" action="post_del_ok"
-						onsubmit="return del_check();">
-						<input type="hidden" name="mateno" value="${p.mateno}">
-						<button type="submit">게시물 삭제하기</button>
-					</form>
-				</div>
-
-
-				<p class="user-title">제목:${p.mate_title}</p>
-				<p class="user-cont">내용:${p.mate_cont}</p>
-				<div class="image-grid">
-					<c:forEach var="img" items="${p.images}">
-						<img
-							src="${pageContext.request.contextPath}/upload${img.uploadFile}"
-							alt="Upload image" />
-
-					</c:forEach>
-				</div>
-			</div>
-			<div class="interactions">
-				<button class="like-button" name="like" id="like"
-					onclick="post_like">좋아요</button>
-                    <!-- 댓글 추가 버튼 -->
-                    <button class="comment-button">댓글</button>
-                    
-          
-       
-    </div>
-
-			<p class="hashtag">
-				<c:forEach var="hashtag" items="${p.mt_hashtag.split(',')}">
-					<span class="hashtag-item">#${hashtag.trim()}</span>
-				</c:forEach>
-			</p>
-			<p class="user-updatedate">업데이트날짜:${p.updatedate}</p>
-
-
-		</div>
-	</c:forEach>
+                <p class="user-title">제목: ${p.mate_title}</p>
+                <p class="user-cont">내용: ${p.mate_cont}</p>
+                <div class="image-grid">
+                    <c:forEach var="img" items="${p.images}">
+                        <img src="${pageContext.request.contextPath}/upload${img.uploadFile}" alt="Upload image" />
+                    </c:forEach>
+                </div>
+            </div>
+            <div class="interactions">
+                <button class="like-button" name="like" id="like" onclick="post_like()">좋아요</button>
+                
+                <!-- 게시물에 대한 댓글 버튼 -->
+                <button class="comment-button" data-mateno="${p.mateno}">댓글</button>   
+            </div>
+            
+            <!-- 댓글 입력 폼 및 댓글 목록 -->
+             <div id="comment-section-${p.mateno}" class="comment-section" style="display: none;">
+                    <form class="commentForm" data-mateno="${p.mateno}">
+                        <input type="text" class="commentText" placeholder="댓글 입력">
+                        <button type="submit">댓글 추가</button>
+                    </form>
+                    <div id="comment-list-${p.mateno}" class="comment-list"></div>
+                </div>
+            
+            <p class="hashtag">
+                <c:forEach var="hashtag" items="${p.mt_hashtag.split(',')}">
+                    <span class="hashtag-item">#${hashtag.trim()}</span>
+                </c:forEach>
+            </p>
+            <p class="user-updatedate">업데이트날짜: ${p.updatedate}</p>
+        </div>
+    </c:forEach>
 </div>
 
 <div class="pagination">

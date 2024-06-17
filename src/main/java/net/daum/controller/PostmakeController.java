@@ -161,58 +161,55 @@ public class PostmakeController {
 		
 		
 		  //수정 완료
-		  
-		  @PostMapping("post_edit_ok") 
-		  public ModelAndView post_edit_ok(@RequestParam("mateno") Long mateno, 
-		Community_boardVO cb,@RequestParam("uploadFile") List<MultipartFile> uploadFile,
-		  HttpServletRequest request ,HttpServletResponse response ) throws Exception {
-		  response.setContentType("text/html;charset=UTF-8");
-		  
-		  String uploadFolder = request.getServletContext().getRealPath("upload");
-		  
-		  //게시물 정보 저장 
-		  this.postService.editBoard(cb);
-		  
-		  List<String> fileDBNames = new ArrayList<>();
-		  for (MultipartFile file : uploadFile) {
-				if (!file.isEmpty()) {// 파일 리스트가 비어있지않다면
-					String originalFilename = file.getOriginalFilename(); // file 원래 이름
-					String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);// 확장자 추출
+	  @PostMapping("post_edit_ok")
+	    public ModelAndView post_edit_ok(@RequestParam("mateno") Long mateno,
+	                                     Community_boardVO cb, @RequestParam("uploadFile") List<MultipartFile> uploadFile,
+	                                     HttpServletRequest request, HttpServletResponse response) throws Exception {
+	        response.setContentType("text/html;charset=UTF-8");
 
-					Calendar c = Calendar.getInstance();// 현재의 날짜를 담은 calendar 객체 생성
-					int year = c.get(Calendar.YEAR);
-					int month = c.get(Calendar.MONTH) + 1; // +1해주는 이유는 0~11으로 계산되기 떄문에
-					int date = c.get(Calendar.DATE);
+	        String uploadFolder = request.getServletContext().getRealPath("upload");
 
-					String homedir = uploadFolder + "/" + year + "-" + month + "-" + date;
-					File path01 = new File(homedir);
+	        // 게시물 정보 저장
+	        this.postService.editBoard(cb);
 
-					
-					if (!(path01.exists())) {// 오늘 날짜 폴더 경로가 존재하지 않으면
-						path01.mkdir();// 오늘 날짜 폴더 생성
-					}
-					Random r = new Random();
-					int random = r.nextInt(100000000);
+	        List<String> fileDBNames = new ArrayList<>();
+	        for (MultipartFile file : uploadFile) {
+	            if (!file.isEmpty()) {
+	                String originalFilename = file.getOriginalFilename();
+	                String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 
-					String refileName = "cmimg" + year + month + date + random + "." + fileExtension;// 파일명 랜덤값만
-					String fileDBName = "/" + year + "-" + month + "-" + date + "/" + refileName;// 데이터 베이스에 저장하기위한
-																									// 파일명(전체경로와 파일명)
-					File saveFile = new File(homedir, refileName);
-					file.transferTo(saveFile);
-					
-					fileDBNames.add(fileDBName);
-				}
-		  }
-		  //이미지 정보 저장 및 업데이트
-		  postService.editImages(mateno,fileDBNames);
-		  
-		  
-		  ModelAndView an = new ModelAndView(); 
-		  
-		  an.setViewName("redirect:/community_board"); 
-		  return an;
-		  }
-		  
+	                Calendar c = Calendar.getInstance();
+	                int year = c.get(Calendar.YEAR);
+	                int month = c.get(Calendar.MONTH) + 1;
+	                int date = c.get(Calendar.DATE);
+
+	                String homedir = uploadFolder + "/" + year + "-" + month + "-" + date;
+	                File path01 = new File(homedir);
+
+	                if (!path01.exists()) {
+	                    path01.mkdir();
+	                }
+	                Random r = new Random();
+	                int random = r.nextInt(100000000);
+
+	                String refileName = "cmimg" + year + month + date + random + "." + fileExtension;
+	                String fileDBName = "/" + year + "-" + month + "-" + date + "/" + refileName;
+	                File saveFile = new File(homedir, refileName);
+	                file.transferTo(saveFile);
+
+	                fileDBNames.add(fileDBName);
+	            }
+	        }
+
+	        // 이미지 정보 저장 및 업데이트
+	        postService.editImages(mateno, fileDBNames);
+
+	        ModelAndView an = new ModelAndView();
+	        an.setViewName("redirect:/community_board");
+	        return an;
+	    }
+	
+	
 		  //게시물 삭제 
 		  @PostMapping("post_del_ok")
 		  public String post_del_ok(@RequestParam("mateno") Long mateno, HttpServletResponse response, HttpServletRequest request) 

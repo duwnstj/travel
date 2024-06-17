@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +29,8 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude="comments")
+@EqualsAndHashCode(of="mateno")
 @Entity
 @SequenceGenerator(// 오라클 시퀀스 생성기
 		name = "mate_noseq_gename", 
@@ -36,7 +39,7 @@ import lombok.ToString;
 		allocationSize = 1
 
 )
-@EqualsAndHashCode(of="mateno")
+
 @Table(name = "community_board")
 public class Community_boardVO {
 
@@ -60,7 +63,8 @@ public class Community_boardVO {
 	
 	private String mt_hashtag; //해시태그
 	
-	@OneToMany(mappedBy="communityBoard", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="communityBoard", cascade = CascadeType.ALL,orphanRemoval = true)
+	@JsonBackReference
 	private List<Cm_CommentVO> comments;
 	
 	
