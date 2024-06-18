@@ -20,12 +20,16 @@ public interface PostService {
 
 	
 
-	Community_boardVO getPostInfo(Long mateno);
+	
 
 	void editBoard(Community_boardVO cb);
 
-	void editImages(Long mateno, List<String> fileDBNames);
-
+	void editImages(Long mateno, List<String> newImages, List<String> deleteImages);
+	
+	void deleteImages(Long mateno, List<String>deleteImages);
+	
+	Community_boardVO getPostInfo(Long mateno);
+	
 	void delpost(Long mateno);
 	
 
@@ -36,6 +40,10 @@ public interface PostService {
 	Page<Community_boardVO> searchPostsByTitle(String searchInput, Pageable pageable);
 
 	Page<Community_boardVO> searchPostsByContent(String searchInput, Pageable pageable);
+
+	
+
+	
 
 
 

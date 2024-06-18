@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -152,6 +153,7 @@ public class PostmakeController {
 		 	am.addObject("mate_title", post.getMate_title());
 		 	am.addObject("mate_cont",post.getMate_cont());
 		 	am.addObject("mt_hashtag",post.getMt_hashtag());
+		 	am.addObject("images",post.getImages());
 			
 			am.setViewName("/jsp/postEdit");
 			
@@ -164,6 +166,7 @@ public class PostmakeController {
 	  @PostMapping("post_edit_ok")
 	    public ModelAndView post_edit_ok(@RequestParam("mateno") Long mateno,
 	                                     Community_boardVO cb, @RequestParam("uploadFile") List<MultipartFile> uploadFile,
+	                                     @RequestParam(value = "deleteImages", required = false) List<String> deleteImages,
 	                                     HttpServletRequest request, HttpServletResponse response) throws Exception {
 	        response.setContentType("text/html;charset=UTF-8");
 
@@ -202,12 +205,30 @@ public class PostmakeController {
 	        }
 
 	        // 이미지 정보 저장 및 업데이트
-	        postService.editImages(mateno, fileDBNames);
+	        postService.editImages(mateno, fileDBNames,deleteImages);
 
 	        ModelAndView an = new ModelAndView();
 	        an.setViewName("redirect:/community_board");
 	        return an;
 	    }
+	  @PostMapping("/delete_image")
+	  public @ResponseBody String deleteImage(@RequestParam("uploadFile")String uploadFile,
+			  									@RequestParam("mateno")Long mateno,HttpServletRequest request) {
+		  try {
+			  String uploadFolder=request.getServletContext().getRealPath("upload");
+			  File file = new File(uploadFolder + uploadFile);
+			  if(file.exists()) {
+				  file.delete();
+			  }
+			  postService.deleteImages(mateno,List.of(uploadFile));
+			  return "success";
+			  
+		  }catch(Exception e) {
+			  e.printStackTrace();
+			  return "fail";
+		  }
+	  }
+	  
 	
 	
 		  //게시물 삭제 

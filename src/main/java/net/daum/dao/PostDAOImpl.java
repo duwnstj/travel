@@ -83,26 +83,34 @@ public class PostDAOImpl implements PostDAO {
 	        postRepo.save(existingBoard);
 	    }
 
-
-	@Override
-	public void editImages(Long mateno, List<String> fileDBNames) {
-		Community_boardVO post = postRepo.getPostInfo(mateno);
-		
-		//기존 이미지 삭제
-		if(post.getImages() != null) {
-			cmImgRepo.deleteAll(post.getImages());
+	  @Override
+		public void editImages(Long mateno, List<String> newImages) {
+			
+			
+			System.out.println("\n 이미지 새로 저장");
+			//새 이미지 저장
+			for(String fileDBName : newImages) {
+				Cm_ImgVO newImage = new Cm_ImgVO();
+				newImage.setMateno2(mateno);
+				newImage.setUploadFile(fileDBName);
+				cmImgRepo.save(newImage);
+				
+			}
+			
 		}
-		//새 이미지 저장
-		for(String fileDBName : fileDBNames) {
-			Cm_ImgVO newImage = new Cm_ImgVO();
-			newImage.setMateno2(mateno);
-			newImage.setUploadFile(fileDBName);
-			cmImgRepo.save(newImage);
+
+
+		@Override
+		public void deleteImages(Long mateno, List<String> deleteImages) {
+			
+			//게시글 번호에 맞는 이미지 삭제
+			for(String fileDBName:deleteImages) {
+				System.out.println("\n 이미지 삭제");
+				cmImgRepo.deleteByuploadFileAndMateno2(fileDBName,mateno);
+			}
+			
 		}
 		
-	}
-
-
 	@Override
 	public void delpost(Long mateno) {
 		System.out.println(" \n 게시물 삭제");
@@ -129,6 +137,13 @@ public class PostDAOImpl implements PostDAO {
 		System.out.println(" \n 글내용으로 검색");
 		return postRepo.searchPostsByContent(searchInput,pageable);
 	}
+
+
+
+
+	
+
+	
 
 
 

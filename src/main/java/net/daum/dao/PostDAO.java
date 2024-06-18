@@ -25,9 +25,12 @@ public interface PostDAO {
 
 	void editBoard(Community_boardVO cb);
 
-
-	void editImages(Long mateno, List<String> fileDBNames);
-
+	void editImages(Long mateno, List<String> newImages);
+	
+	void deleteImages(Long mateno, List<String> deleteImages);
+	
+	
+	
 	void delpost(Long mateno);
 
 
@@ -38,6 +41,14 @@ public interface PostDAO {
 	Page<Community_boardVO> searchPostsByTitle(String searchInput, Pageable pageable);
 
 	Page<Community_boardVO> searchPostsByContent(String searchInput, Pageable pageable);
+
+	
+
+	
+
+	
+
+
 
 	
 

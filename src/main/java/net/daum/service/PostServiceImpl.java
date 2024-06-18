@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.daum.dao.PostDAO;
 import net.daum.vo.Cm_ImgVO;
@@ -39,12 +40,7 @@ public class PostServiceImpl implements PostService {
 		return this.postDao.getAllposts(pageable);
 	}
 
-	@Override
-	public Community_boardVO getPostInfo(Long mateno) {
-		
-		return this.postDao.getPostInfo(mateno);
-	}
-
+	@Transactional
 	@Override
 	public void editBoard(Community_boardVO cb) {
 		
@@ -52,12 +48,32 @@ public class PostServiceImpl implements PostService {
 		
 	}
 
+	@Transactional
+	@Override
+	public void editImages(Long mateno, List<String> newImages, List<String> deleteImages) {
+		if(deleteImages != null && !deleteImages.isEmpty()) {
+			postDao.deleteImages(mateno,deleteImages);
+		}
+		if(newImages!=null && !newImages.isEmpty()) {
+			postDao.editImages(mateno, newImages);
+		}
+		
+	}
+	@Transactional
+	@Override
+	public void deleteImages(Long mateno, List<String> deleteImages) {
+		postDao.deleteImages(mateno, deleteImages);
+		
+	}
 	
 
+
 	@Override
-	public void editImages(Long mateno, List<String> fileDBNames) {
-		this.postDao.editImages(mateno , fileDBNames);
+	public Community_boardVO getPostInfo(Long mateno) {
+		
+		return this.postDao.getPostInfo(mateno);
 	}
+
 
 	@Override
 	public void delpost(Long mateno) {
@@ -82,6 +98,11 @@ public class PostServiceImpl implements PostService {
 		
 		return this.postDao.searchPostsByContent(searchInput,pageable);
 	}
+
+	
+
+	
+	
 
 
 	

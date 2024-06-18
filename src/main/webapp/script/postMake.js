@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('mate_title').addEventListener('keydown', updatePreviewOnEnter);
     document.getElementById('mate_cont').addEventListener('keydown', updatePreviewOnEnter);
     document.getElementById('mt_hashtag').addEventListener('keydown', updatePreviewOnEnter);
-    document.getElementById('uploadFile2').addEventListener('keydown', updatePreviewOnEnter);
     });
     
     function updatePreviewOnEnter(event){
@@ -26,4 +25,35 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 	
    }
+   
+   $(document).ready(function() {
+    $('#existing-images').on('change', 'input[type="checkbox"]', function() {
+        var checkbox = $(this);
+        var uploadFile = checkbox.val();
+        var mateno = $('input[name="mateno"]').val();
+
+        if (checkbox.is(':checked')) {
+            $.ajax({
+                url: '/delete_image',
+                type: 'POST',
+                data: {
+                    uploadFile: uploadFile,
+                    mateno: mateno
+                },
+                success: function(response) {
+                    if (response === 'success') {
+                        checkbox.closest('.image-item').remove();
+                    } else {
+                        alert('이미지 삭제 실패');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('이미지 삭제 중 오류 발생:', error);
+                    alert('이미지 삭제 중 오류가 발생했습니다.');
+                }
+            });
+        }
+    });
+});
+   
    
